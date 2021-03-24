@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+
+class HomePageBodyTop extends StatefulWidget {
+  @override
+  _HomePageBodyTopState createState() => _HomePageBodyTopState();
+}
+
+class _HomePageBodyTopState extends State<HomePageBodyTop> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          shape: BoxShape.circle,
+        ),
+        child: ClipOval(
+          child: Image.network(
+            'https://flutter'
+            '.dev/docs/cookbook/img-files/effects/split-check/Avatar1.jpg',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+}
