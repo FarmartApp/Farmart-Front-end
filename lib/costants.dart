@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Colors.green;
+const kPrimaryColor = Colors.white;
 const kPrimaryLightColor = Colors.greenAccent;
 const kDefaultPadding = 20.0;
 const kDefaultShadow =

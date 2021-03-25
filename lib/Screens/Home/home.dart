@@ -11,9 +11,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selecteditemindex = 0;
+  void _onTapeditem(int index) {
+    setState(() {
+      _selecteditemindex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: kPrimaryColor,
@@ -22,18 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: <Widget>[
             IconButton(
                 icon: Icon(
-                  Icons.search,
+                  Icons.notifications,
                   color: Colors.white,
                 ),
-                onPressed: null),
-            IconButton(
-                icon: Icon(Icons.notifications, color: Colors.white),
                 onPressed: null),
           ],
         ),
         body: Container(
           height: size.height,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 margin: EdgeInsets.all(kDefaultPadding),
@@ -59,186 +65,36 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: kDefaultPadding / 2,
               ),
-              Expanded(
-                  child: Stack(
-                children: <Widget>[
-                  //background
-
-                  Container(
-                    margin: EdgeInsets.only(top: 70),
-                    decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40))),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: kDefaultPadding,
-                        vertical: kDefaultPadding / 2),
-                    height: 160,
-                    //    color: Colors.greenAccent,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: <Widget>[
-                        Container(
-                          height: 136,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(22),
-                              color: Colors.greenAccent,
-                              boxShadow: [kDefaultShadow]),
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(22)),
-                          ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                width: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white70.withOpacity(0.4)),
+                child: AspectRatio(
+                  aspectRatio: 0.693,
+                  child: Column(
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: Image.asset(
+                          "assets/pumpkin.jpg",
+                          fit: BoxFit.cover,
                         ),
-                        Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: kDefaultPadding),
-                              height: 150,
-                              width: 200,
-                              child: Image.asset(
-                                "assets/potatto.jpeg",
-                              ),
-                            )),
-                        Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: SizedBox(
-                              height: 136,
-                              width: size.width - 200,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: kDefaultPadding),
-                                    child: Text(
-                                      "Tomato",
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: kDefaultPadding),
-                                    child: Text(
-                                      "Weight: 200kg",
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: kDefaultPadding * 1.5,
-                                        vertical: kDefaultPadding / 4),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(22),
-                                            topRight: Radius.circular(22)),
-                                        color: Colors.greenAccent),
-                                    child: Text(
-                                      "Order",
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ))
-                      ],
-                    ),
+                      ),
+                      Title(
+                          color: Colors.black,
+                          child: Text(
+                            "Pumpkin",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                      Text("Rs100")
+                    ],
                   ),
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: kDefaultPadding,
-                        vertical: kDefaultPadding / 2),
-                    height: 160,
-                    //    color: Colors.greenAccent,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: <Widget>[
-                        Container(
-                          height: 136,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(22),
-                              color: Colors.greenAccent,
-                              boxShadow: [kDefaultShadow]),
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(22)),
-                          ),
-                        ),
-                        Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: kDefaultPadding),
-                              height: 150,
-                              width: 200,
-                              child: Image.asset(
-                                "assets/tomato.jpg",
-                              ),
-                            )),
-                        Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: SizedBox(
-                              height: 136,
-                              width: size.width - 200,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: kDefaultPadding),
-                                    child: Text(
-                                      "Tomato",
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: kDefaultPadding),
-                                    child: Text(
-                                      "Weight: 200kg",
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: kDefaultPadding * 1.5,
-                                        vertical: kDefaultPadding / 4),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(22),
-                                            topRight: Radius.circular(22)),
-                                        color: Colors.greenAccent),
-                                    child: Text(
-                                      "Rs.100",
-                                      style: Theme.of(context).textTheme.button,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                ],
-              ))
+                ),
+              )
             ],
           ),
         ),
@@ -328,35 +184,28 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
+          currentIndex: _selecteditemindex,
+          onTap: _onTapeditem,
+          selectedItemColor: Colors.green,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  color: Colors.green,
-                ),
-                title: Text(
-                  "Home",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
+              icon: Icon(
+                Icons.home,
+              ),
+              label: "Home",
+            ),
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.favorite,
-                  color: Colors.green,
-                ),
-                title: Text(
-                  "Wish List",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
+              icon: Icon(
+                Icons.favorite,
+              ),
+              label: "Wish List",
+            ),
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.car_rental,
-                  color: Colors.green,
-                ),
-                title: Text(
-                  "Transporter",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
+              icon: Icon(
+                Icons.car_rental,
+              ),
+              label: "Transport",
+            ),
           ],
         ),
       ),
