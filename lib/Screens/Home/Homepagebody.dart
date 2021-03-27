@@ -1,3 +1,4 @@
+import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
 import 'package:flutter/material.dart';
 
 class HomePageBody extends StatefulWidget {
@@ -8,6 +9,7 @@ class HomePageBody extends StatefulWidget {
 class _HomePageBodyState extends State<HomePageBody> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,12 +24,17 @@ class _HomePageBodyState extends State<HomePageBody> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                width: 200,
+                width: 150,
               ),
               Expanded(
                 child: RaisedButton(
                   color: Colors.green,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (contex) => EditProfilePage()));
+                  },
                   shape: StadiumBorder(),
                   child: Text(
                     "+ Add",
@@ -51,8 +58,8 @@ class _HomePageBodyState extends State<HomePageBody> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: MediaQuery.of(context).size.width - 230.0,
-                  height: MediaQuery.of(context).size.width - 230.0,
+                  width: MediaQuery.of(context).size.width - 220.0,
+                  height: MediaQuery.of(context).size.width - 210.0,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
@@ -88,8 +95,8 @@ class _HomePageBodyState extends State<HomePageBody> {
               InkWell(
                 onTap: () {},
                 child: Container(
-                  width: MediaQuery.of(context).size.width - 230.0,
-                  height: MediaQuery.of(context).size.width - 230.0,
+                  width: MediaQuery.of(context).size.width - 220.0,
+                  height: MediaQuery.of(context).size.width - 210.0,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: [
@@ -102,7 +109,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20.0),
                           child: Image.asset(
-                            "assets/fruits1.jpg",
+                            "assets/fruits2.jpg",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -146,6 +153,10 @@ class _HomePageBodyState extends State<HomePageBody> {
                     50,
                     (index) => Container(
                           child: Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: BorderSide(
+                                    color: Colors.grey.withOpacity(0.1))),
                             color: Colors.grey.withOpacity(0.2),
                           ),
                         )),

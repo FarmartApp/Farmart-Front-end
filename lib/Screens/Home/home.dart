@@ -1,4 +1,5 @@
 import 'package:farmart_flutter_app/Screens/Home/homebody.dart';
+import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
 import 'package:farmart_flutter_app/costants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -126,8 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 leading: Icon(Icons.person_add, color: Colors.green),
                 onTap: () {
-                  //  // Then close the drawer.
-                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              new EditProfilePage()));
                 },
               ),
               ListTile(
