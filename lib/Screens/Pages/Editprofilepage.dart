@@ -11,6 +11,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  int _selecteditemindex = 0;
+  void _onTapeditem(int index) {
+    setState(() {
+      _selecteditemindex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,6 +134,31 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         }
       }),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selecteditemindex,
+        onTap: _onTapeditem,
+        selectedItemColor: Colors.green,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+            ),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite,
+            ),
+            label: "Wish List",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.car_rental,
+            ),
+            label: "Transport",
+          ),
+        ],
+      ),
     );
   }
 }

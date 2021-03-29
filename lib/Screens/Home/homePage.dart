@@ -1,4 +1,6 @@
 import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
+import 'package:farmart_flutter_app/Screens/Pages/HistoryPage.dart';
+import 'package:farmart_flutter_app/Screens/Pages/Setting.dart';
 import 'package:flutter/material.dart';
 
 import 'Homepagebody.dart';
@@ -207,8 +209,8 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.green, fontWeight: FontWeight.bold)),
               leading: Icon(Icons.settings, color: Colors.green),
               onTap: () {
-                //  // Then close the drawer.
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SettingPage()));
               },
             ),
             ListTile(
@@ -218,7 +220,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.history, color: Colors.green),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (contex) => EditProfilePage()));
+                    MaterialPageRoute(builder: (contex) => HistoryPage()));
               },
             ),
             ListTile(
