@@ -13,7 +13,7 @@ class FarmartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
       title: 'Authentication',
       theme: ThemeData(

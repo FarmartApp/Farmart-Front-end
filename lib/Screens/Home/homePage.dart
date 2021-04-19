@@ -85,11 +85,15 @@ class _HomePageState extends State<HomePage> {
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      Text(
-                                        "Vegetables",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8.0, top: 0),
+                                        child: Text(
+                                          "Vegetables",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
                                       )
                                     ],
                                   )))),
@@ -114,11 +118,15 @@ class _HomePageState extends State<HomePage> {
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                      Text(
-                                        "Fruits",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          "Fruits",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
                                       )
                                     ],
                                   )))),
@@ -145,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                 InkWell(
                   onTap: () {},
                   child: Container(
-                    height: 200,
+                    height: MediaQuery.of(context).size.height,
                     padding: EdgeInsets.all(20.0),
                     child: GridView.count(
                       crossAxisCount: 2,
@@ -153,7 +161,86 @@ class _HomePageState extends State<HomePage> {
                       children: List.generate(
                           50,
                           (index) => Container(
+                                width: 320,
+                                height: 200,
                                 child: Card(
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: 320,
+                                        height: 200,
+                                        child: Image.asset(
+                                          "assets/veg.jpeg",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.only(right: 5, top: 0),
+                                        child: IconButton(
+                                          color: Colors.grey[100],
+                                          icon: Icon(Icons.favorite),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 200),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "Potatto",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "200kg",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ))
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 220),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              "200Rs",
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontWeight: FontWeight.bold),
+                                            ))
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: 260, left: 50),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Text(
+                                              "Click to order",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ))
+                                    ],
+                                  ),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                       side: BorderSide(

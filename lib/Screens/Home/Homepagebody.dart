@@ -1,4 +1,5 @@
 import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
+import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:flutter/material.dart';
 
 class HomePageBody extends StatefulWidget {
@@ -78,7 +79,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Text(
                         "Vegetables",
@@ -152,12 +153,99 @@ class _HomePageBodyState extends State<HomePageBody> {
                 children: List.generate(
                     50,
                     (index) => Container(
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: BorderSide(
-                                    color: Colors.grey.withOpacity(0.1))),
-                            color: Colors.grey.withOpacity(0.2),
+                          width: 200,
+                          height: 100,
+                          child: InkWell(
+                            onTap: () {},
+                            child: Card(
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: 200,
+                                    height: 100,
+                                    child: Image.asset(
+                                      "assets/onion.jpeg",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 5, top: 0),
+                                    child: IconButton(
+                                      color: Colors.grey[100],
+                                      icon: Icon(Icons.favorite),
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 100),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          "POtatto",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          "200kg",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 120),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                          "200Rs",
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold),
+                                        ))
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 140, left: 30),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderPage()));
+                                        },
+                                        child: Text(
+                                          "Click to order",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ))
+                                ],
+                              ),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  side: BorderSide(
+                                      color: Colors.grey.withOpacity(0.1))),
+                              color: Colors.grey.withOpacity(0.2),
+                            ),
                           ),
                         )),
               ),

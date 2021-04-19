@@ -179,7 +179,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 50,
+              height: 70,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
                 onChanged: (text) {
@@ -206,7 +206,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 50,
+              height: 70,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
                 onChanged: (text) {
@@ -233,7 +233,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 50,
+              height: 70,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
                 onChanged: (text) {
@@ -259,11 +259,12 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 70, top: 30),
+                padding: const EdgeInsets.only(left: 10, top: 30),
                 child: Container(
-                  width: 150,
+                  width: 140,
                   height: 50,
                   child: RaisedButton(
                       shape: RoundedRectangleBorder(
@@ -277,9 +278,10 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
                               text: "Successfully updated!");
                         } else {
                           CoolAlert.show(
-                              context: null,
-                              type: CoolAlertType.error,
-                              text: "Error!");
+                            context: context,
+                            type: CoolAlertType.error,
+                            text: "Error!",
+                          );
                         }
                       },
                       child: Text(
@@ -291,7 +293,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, top: 30),
                 child: Container(
-                  width: 150,
+                  width: 140,
                   height: 50,
                   child: RaisedButton(
                       shape: RoundedRectangleBorder(
