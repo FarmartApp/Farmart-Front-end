@@ -3,8 +3,11 @@ import 'package:farmart_flutter_app/Screens/Pages/HistoryPage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Setting.dart';
 import 'package:flutter/material.dart';
 
+import 'Fruits.dart';
 import 'Homepagebody.dart';
+import 'Vegetales.dart';
 
+//not use this
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -66,7 +69,13 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   children: <Widget>[
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    VegetablesView()));
+                      },
                       child: Padding(
                           padding: EdgeInsets.all(10),
                           child: ClipRRect(
@@ -99,7 +108,13 @@ class _HomePageState extends State<HomePage> {
                                   )))),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    FruitsView()));
+                      },
                       child: Padding(
                           padding: EdgeInsets.all(10),
                           child: ClipRRect(

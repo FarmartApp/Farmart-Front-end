@@ -20,35 +20,42 @@ class _OrderPageState extends State<OrderPage> {
         ),
         body: ListView(
           children: [
-            Container(
-              child: Image.asset(
-                "assets/potatto.jpeg",
-                fit: BoxFit.cover,
-              ),
-              height: 400,
-              decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(120),
-                      bottomRight: Radius.circular(120))),
-            ),
             Row(
               children: [
+                Card(
+                  child: Container(
+                    height: 100,
+                    width: 200,
+                    child: Image.asset(
+                      "assets/potatto.jpeg",
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
                 Text(
                   "Potatto",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: 180,
+                  width: 10,
                 ),
                 Text(
                   "Rs100",
                   style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
+                Text(
+                  "Weight:",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                // IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
               ],
             ),
             Text(
@@ -58,49 +65,6 @@ class _OrderPageState extends State<OrderPage> {
             Text(
               "Descriptionhjhjijiji",
               style: TextStyle(fontSize: 14),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 10),
-                    child: Container(
-                      height: 50,
-                      width: 150,
-                      child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Colors.green,
-                          onPressed: () {},
-                          child: Text(
-                            "Order",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 18.0, top: 10),
-                    child: Container(
-                      height: 50,
-                      width: 150,
-                      child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Colors.grey,
-                          onPressed: () {},
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ),
-                  ),
-                ),
-              ],
             ),
           ],
         ),

@@ -1,6 +1,9 @@
+import 'package:farmart_flutter_app/Screens/Home/Fruits.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:flutter/material.dart';
+
+import 'Vegetales.dart';
 
 class HomePageBody extends StatefulWidget {
   @override
@@ -57,7 +60,12 @@ class _HomePageBodyState extends State<HomePageBody> {
                 width: 20,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => VegetablesView()));
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width - 220.0,
                   height: MediaQuery.of(context).size.width - 210.0,
@@ -94,7 +102,12 @@ class _HomePageBodyState extends State<HomePageBody> {
                 width: 20,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => FruitsView()));
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width - 220.0,
                   height: MediaQuery.of(context).size.width - 210.0,
