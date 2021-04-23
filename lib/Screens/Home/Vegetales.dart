@@ -1,6 +1,8 @@
 import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:flutter/material.dart';
 
+import 'DetailsPage.dart';
+
 class VegetablesView extends StatefulWidget {
   @override
   _VegetablesViewState createState() => _VegetablesViewState();
@@ -139,7 +141,13 @@ class _VegetablesViewState extends State<VegetablesView> {
     return Padding(
       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      DetailsPage(img, harvestname, price, weight, herotag)));
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

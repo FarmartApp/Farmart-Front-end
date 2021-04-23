@@ -85,6 +85,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     color: Colors.green),
               )),
           Container(
+            height: 30,
+            width: 120,
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: 5.0),
             child: Image.asset("assets/signup.jpg", height: size.height * 0.4),
