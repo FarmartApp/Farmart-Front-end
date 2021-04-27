@@ -1,6 +1,10 @@
+import 'package:farmart_flutter_app/Model/user.dart';
+import 'package:farmart_flutter_app/Screens/BottomNavigation/Transportpage.dart';
+import 'package:farmart_flutter_app/Screens/BottomNavigation/Wishlist.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/HistoryPage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Setting.dart';
+import 'package:farmart_flutter_app/Screens/Product/Addharvest.dart';
 import 'package:flutter/material.dart';
 
 import 'Fruits.dart';
@@ -9,15 +13,39 @@ import 'Vegetales.dart';
 
 //not use this
 class HomePage extends StatefulWidget {
+  final String token;
+  final int index;
+  const HomePage({Key key, this.token, this.index}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  int indexnum;
+
   int _selecteditemindex = 0;
   void _onTapeditem(int index) {
     setState(() {
       _selecteditemindex = index;
+      /*   if (index == 0) {
+        indexnum = index;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomePage(
+                      index: index,
+                    )));
+      } else if (index == 1) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WishlistPage(
+                      index1: index,
+                    )));
+      } else if (index == 2) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => TransportPage(index)));
+      }*/
     });
   }
 
@@ -55,7 +83,10 @@ class _HomePageState extends State<HomePage> {
                       child: RaisedButton(
                         color: Colors.green,
                         onPressed: () {
-                          print(MediaQuery.of(context).size.width);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (contex) => AddHarvestPage()));
                         },
                         shape: StadiumBorder(),
                         child: Text(
@@ -170,100 +201,108 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     padding: EdgeInsets.all(20.0),
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      scrollDirection: Axis.vertical,
-                      children: List.generate(
-                          50,
-                          (index) => Container(
-                                width: 320,
-                                height: 200,
-                                child: Card(
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        width: 320,
-                                        height: 200,
-                                        child: Image.asset(
-                                          "assets/veg.jpeg",
-                                          fit: BoxFit.cover,
+                    child: OrientationBuilder(builder: (context, orientation) {
+                      return GridView.count(
+                        crossAxisCount:
+                            orientation == Orientation.portrait ? 2 : 3,
+                        scrollDirection: Axis.vertical,
+                        children: List.generate(
+                            50,
+                            (index) => Container(
+                                  width: 320,
+                                  height: 200,
+                                  child: Card(
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          width: 320,
+                                          height: 200,
+                                          child: Image.asset(
+                                            "assets/veg.jpeg",
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(right: 5, top: 0),
-                                        child: IconButton(
-                                          color: Colors.grey[100],
-                                          icon: Icon(Icons.favorite),
-                                          onPressed: () {},
+                                        Padding(
+                                          padding:
+                                              EdgeInsets.only(right: 5, top: 0),
+                                          child: IconButton(
+                                            color: Colors.grey[100],
+                                            icon: Icon(Icons.favorite),
+                                            onPressed: () {},
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 200),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              "Potatto",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              "200kg",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 200),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                "Potatto",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                "200kg",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 220),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                "200Rs",
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ))
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 260, left: 50),
+                                            child: InkWell(
+                                              onTap: () {},
+                                              child: Text(
+                                                "Click to order",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                             ))
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 220),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              "200Rs",
-                                              style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontWeight: FontWeight.bold),
-                                            ))
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 260, left: 50),
-                                          child: InkWell(
-                                            onTap: () {},
-                                            child: Text(
-                                              "Click to order",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ))
-                                    ],
+                                      ],
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                        side: BorderSide(
+                                            color:
+                                                Colors.grey.withOpacity(0.1))),
+                                    color: Colors.grey.withOpacity(0.2),
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      side: BorderSide(
-                                          color: Colors.grey.withOpacity(0.1))),
-                                  color: Colors.grey.withOpacity(0.2),
-                                ),
-                              )),
-                    ),
+                                )),
+                      );
+                    }),
                   ),
                 ),
               ],
@@ -301,6 +340,7 @@ class _HomePageState extends State<HomePage> {
               ),
               leading: Icon(Icons.person_add, color: Colors.green),
               onTap: () {
+                print(widget.token);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (contex) => EditProfilePage()));
               },

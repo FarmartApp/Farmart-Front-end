@@ -1,6 +1,8 @@
+import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
+
 import 'Screens/Home/home.dart';
 import 'Screens/Home/homePage.dart';
-import 'file:///C:/Users/Nanthiny/Farmart/farmart_flutter_app/lib/Screens/Welcome/welcome_screen.dart';
+import 'Screens/Register/register.dart';
 import 'package:farmart_flutter_app/costants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +15,7 @@ class FarmartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
       title: 'Authentication',
       theme: ThemeData(

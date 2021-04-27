@@ -47,19 +47,28 @@ class Body extends StatelessWidget {
                 );
               },
             ),
-            RoundedButton(
-              text: "Register",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return RegisterScreen();
-                    },
+            SizedBox(
+              height: 5,
+            ),
+            Text("Or"),
+            SizedBox(
+              height: 5,
+            ),
+            Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()));
+                  },
+                  child: Text(
+                    "Create an account?",
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
                   ),
-                );
-              },
-            )
+                ))
           ],
         ),
       ),

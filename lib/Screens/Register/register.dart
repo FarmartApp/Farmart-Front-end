@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:farmart_flutter_app/Model/user.dart';
+import 'package:farmart_flutter_app/Screens/Login/login.dart';
+import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,24 +12,27 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  int num;
   final _formkey = GlobalKey<FormState>();
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController firstnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController primarycontactController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  User user;
-  Future<User> userregister() async {
-    var url = "http://10.0.2.2:8087/adduser";
+  Future<User> _user;
+  Future<http.Response> userregister() async {
+    var url = "http://192.168.43.118:9000/api/register";
     var response = await http.post(url,
         headers: <String, String>{"Content-type": "application/json"},
         body: jsonEncode(<String, String>{
-          "username": usernameController.text,
+          "firstName": firstnameController.text,
           "email": emailController.text,
-          "phonenum": phoneController.text,
+          "contactPrimary": primarycontactController.text,
           "password": passwordController.text
         }));
     print(response);
-    String responseString = response.body;
+    final responseString = json.decode(response.body);
+    String msg = responseString["msg"];
+    num = response.statusCode;
     if (response.statusCode == 200) {
       showDialog(
           context: context,
@@ -35,12 +40,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           builder: (BuildContext dialogcontext) {
             return MyAlertDialog(
               title: "Success",
-              content: "Your account Created successfully!",
+              content: msg,
               actions: <Widget>[
                 FlatButton(
                   child: Icon(Icons.close),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    //  Navigator.of(context).pop();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                 )
               ],
@@ -53,12 +60,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
           builder: (BuildContext dialogcontext) {
             return MyAlertDialog(
               title: "Error",
-              content: "Someting went wrong! ",
+              content: msg,
               actions: <Widget>[
                 FlatButton(
                   child: Icon(Icons.close),
                   onPressed: () {
-                    Navigator.pop(context);
+                    //  Navigator.pop(context);
+                    //  Navigator.push(context,
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()));
                   },
                 )
               ],
@@ -73,143 +85,208 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     return Scaffold(
       body: Form(
-        child: ListView(children: <Widget>[
-          Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(top: 50.0),
-              child: Text(
-                "Register",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.green),
-              )),
-          Container(
-            height: 30,
-            width: 120,
-            alignment: Alignment.center,
-            margin: EdgeInsets.only(top: 5.0),
-            child: Image.asset("assets/signup.jpg", height: size.height * 0.4),
-          ),
-          Container(
-            child: TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Fullname is empty';
-                } else {
-                  return '';
-                }
-              },
-              controller: usernameController,
-              decoration: new InputDecoration(
-                labelText: "Full Name",
-                fillColor: Colors.white,
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
-                ),
-                //fillColor: Colors.green
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Container(
-            child: TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Phone number is empty';
-                } else {
-                  return '';
-                }
-              },
-              keyboardType: TextInputType.phone,
-              controller: phoneController,
-              decoration: new InputDecoration(
-                labelText: "Phone Number",
-                fillColor: Colors.white,
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
-                ),
-                //fillColor: Colors.green
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Container(
-            child: TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Email is empty';
-                } else {
-                  return '';
-                }
-              },
-              keyboardType: TextInputType.emailAddress,
-              controller: emailController,
-              decoration: new InputDecoration(
-                labelText: "Email Address",
-                fillColor: Colors.white,
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
-                ),
-                //fillColor: Colors.green
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Container(
-            child: TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Password is empty';
-                } else {
-                  return '';
-                }
-              },
-              obscureText: true,
-              controller: passwordController,
-              decoration: new InputDecoration(
-                labelText: "Password",
-                fillColor: Colors.white,
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                  borderSide: new BorderSide(),
-                ),
-                //fillColor: Colors.green
-              ),
-            ),
-          ),
-          Container(
-              width: size.width * 0.4,
-              margin: EdgeInsets.only(top: 30.0),
-              child: RaisedButton(
-                onPressed: () {
-                  // print("clicked");
-                  //  save();
-                  //   userregister(user.username, user.email, user.phonenum,
-                  //     user.passw);
-                  print(phoneController.text);
-                  userregister();
-                },
-                color: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                ),
-                child: Text(
-                  "Register",
-                  style: TextStyle(color: Colors.white),
-                ),
-              )),
-        ]),
-      ),
+          child: (_user == null)
+              ? ListView(children: <Widget>[
+                  Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 50.0),
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                            color: Colors.green),
+                      )),
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 5.0),
+                    child: Image.asset("assets/signup.jpg",
+                        height: size.height * 0.4),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20.0, right: 20, top: 10),
+                    child: Container(
+                      height: 50,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Firstname is empty';
+                          } else {
+                            return '';
+                          }
+                        },
+                        controller: firstnameController,
+                        decoration: new InputDecoration(
+                          labelText: "First Name",
+                          labelStyle: TextStyle(color: Colors.black),
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          //fillColor: Colors.green
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20,
+                    ),
+                    child: Container(
+                      height: 50,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Primary Contact is empty';
+                          } else {
+                            return '';
+                          }
+                        },
+                        keyboardType: TextInputType.phone,
+                        controller: primarycontactController,
+                        decoration: new InputDecoration(
+                          labelText: "Primary Contact",
+                          labelStyle: TextStyle(color: Colors.black),
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(55.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          //fillColor: Colors.green
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20,
+                    ),
+                    child: Container(
+                      height: 50,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Email is empty';
+                          } else {
+                            return '';
+                          }
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        decoration: new InputDecoration(
+                          labelText: "Email Address",
+                          labelStyle: TextStyle(color: Colors.black),
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          //fillColor: Colors.green
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20,
+                    ),
+                    child: Container(
+                      height: 50,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Password is empty';
+                          } else {
+                            return '';
+                          }
+                        },
+                        obscureText: true,
+                        controller: passwordController,
+                        decoration: new InputDecoration(
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.black),
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          //fillColor: Colors.green
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                          width: size.width * 0.4,
+                          margin:
+                              EdgeInsets.only(left: 20, top: 15.0, right: 20),
+                          child: RaisedButton(
+                            onPressed: () {
+                              //if (_formkey.currentState.validate()) {
+                              print(num);
+
+                              userregister();
+
+                              // }
+                            },
+                            color: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                            ),
+                            child: Text(
+                              "Register",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )),
+                      Container(
+                          width: size.width * 0.4,
+                          margin: EdgeInsets.only(top: 15.0),
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WelcomeScreen()));
+                            },
+                            color: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
+                            ),
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          )),
+                    ],
+                  ),
+                ])
+              : FutureBuilder<User>(
+                  future: _user,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(snapshot.data.email);
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  })),
     );
   }
 }
