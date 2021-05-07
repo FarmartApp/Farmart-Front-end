@@ -1,4 +1,5 @@
 import 'package:fancy_dialog/FancyGif.dart';
+import 'package:farmart_flutter_app/Model/user.dart';
 import 'package:farmart_flutter_app/Screens/Home/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -6,6 +7,8 @@ import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:cool_alert/cool_alert.dart';
 
 class EditProfilePage extends StatefulWidget {
+  final User user;
+  EditProfilePage({this.user});
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -73,13 +76,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   Icons.edit,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {})),
+                                onPressed: () {
+                                  print(widget.user.email);
+                                })),
                       ),
                     ),
                   ],
                 ),
               ),
-              EditProfilePageField(),
+              EditProfilePageField(
+                user: widget.user,
+              ),
             ],
           );
         } else {
@@ -129,7 +136,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
               ),
-              EditProfilePageField(),
+              EditProfilePageField(
+                user: widget.user,
+              ),
             ],
           );
         }
@@ -164,6 +173,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 }
 
 class EditProfilePageField extends StatefulWidget {
+  final User user;
+
+  const EditProfilePageField({Key key, this.user}) : super(key: key);
   @override
   _EditProfilePageFieldState createState() => _EditProfilePageFieldState();
 }
@@ -182,9 +194,8 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
               height: 70,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
-                onChanged: (text) {
-                  print(text);
-                },
+                initialValue: widget.user.firstName,
+                onChanged: (text) {},
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     labelText: "Name",
@@ -209,6 +220,36 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
               height: 70,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
+                // initialValue: widget.user.lastname,
+                onChanged: (text) {
+                  //   print();
+                },
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    labelText: "Last Name",
+                    labelStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide())),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter valid data";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width - 50,
+              child: TextFormField(
+                //     initialValue: widget.user.firstName,
                 onChanged: (text) {
                   print(text);
                 },
@@ -236,6 +277,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
               height: 70,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
+                initialValue: widget.user.password,
                 onChanged: (text) {
                   print(text);
                 },
@@ -243,6 +285,64 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     labelText: "Phone Number",
+                    labelStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide())),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter valid data";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width - 50,
+              child: TextFormField(
+                //      initialValue: widget.user.password,
+                onChanged: (text) {
+                  print(text);
+                },
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    labelText: "District",
+                    labelStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide())),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter valid data";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width - 50,
+              child: TextFormField(
+                //     initialValue: widget.user.password,
+                onChanged: (text) {
+                  print(text);
+                },
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    labelText: "User Name",
                     labelStyle: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),
                     border: OutlineInputBorder(
@@ -285,7 +385,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
                         }
                       },
                       child: Text(
-                        "Submit",
+                        "Update",
                         style: TextStyle(color: Colors.white),
                       )),
                 ),

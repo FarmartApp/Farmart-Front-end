@@ -1,12 +1,49 @@
+import 'package:farmart_flutter_app/Model/product.dart';
 import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class FruitsView extends StatefulWidget {
+  final String token;
+
+  const FruitsView({Key key, this.token}) : super(key: key);
   @override
   _FruitsViewState createState() => _FruitsViewState();
 }
 
 class _FruitsViewState extends State<FruitsView> {
+  List<Product> fruitsproducts = List();
+  List<Product> filteredfruitsproducts = List();
+  Future<http.Response> getFruitproducts() async {
+    var usertoken = widget.token;
+    var url = "http://192.168.43.118:9000/api/productFilter?type=Fruits";
+    var res = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer $usertoken"
+      },
+    ).then((response) {
+      var ddd = jsonDecode(response.body);
+      var datalist = ddd["data"];
+      fruitsproducts =
+          (datalist as List).map((data) => new Product.fromJson(data)).toList();
+    });
+    filteredfruitsproducts = fruitsproducts;
+    print(fruitsproducts);
+    return res;
+  }
+
+  @override
+  void initState() {
+    getFruitproducts();
+    super.initState();
+
+    // ProductService.getproducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -46,6 +83,33 @@ class _FruitsViewState extends State<FruitsView> {
                   ),
                 )
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width - 20,
+              child: TextFormField(
+                onChanged: (text) {
+                  setState(() {
+                    filteredfruitsproducts = fruitsproducts
+                        .where((element) => (element.name
+                            .toLowerCase()
+                            .contains(text.toLowerCase())))
+                        .toList();
+                  });
+                },
+                decoration: InputDecoration(
+                    hintText: "Search here",
+                    contentPadding: EdgeInsets.only(left: 18),
+                    //  fillColor: Colors.white,
+                    labelStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide())),
+              ),
             ),
           ),
           SizedBox(
@@ -88,43 +152,22 @@ class _FruitsViewState extends State<FruitsView> {
                 Padding(
                   padding: EdgeInsets.only(top: 45),
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      // scrollDirection: Axis.vertical,
-                      children: <Widget>[
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem(
-                              "assets/tomato.jpg", "Onion", 200, 100, "img1"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem(
-                              "assets/pumpkin.jpg", "Onion", 200, 100, "img2"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem(
-                              "assets/potatto.jpeg", "Onion", 200, 100, "img3"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem(
-                              "assets/tomato.jpg", "Onion", 200, 100, "img4"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem(
-                              "assets/onion.jpeg", "Onion", 200, 100, "img5"),
-                        ),
-                      ],
-                    ),
-                  ),
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.builder(
+                          itemCount: filteredfruitsproducts.length,
+                          itemBuilder: (context, index) {
+                            Product fruititem = filteredfruitsproducts[index];
+                            return Card(
+                                elevation: 20,
+                                color: Colors.white38,
+                                child: _builditem(
+                                  "assets/tomato.jpg",
+                                  fruititem.name,
+                                  fruititem.weight.toString(),
+                                  fruititem.price.toString(),
+                                  fruititem.id.toString(),
+                                ));
+                          })),
                 )
               ],
             ),
@@ -134,8 +177,8 @@ class _FruitsViewState extends State<FruitsView> {
     );
   }
 
-  Widget _builditem(
-      String img, String harvestname, int price, int weight, String herotag) {
+  Widget _builditem(String img, String harvestname, String price, String weight,
+      String herotag) {
     return Padding(
       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
@@ -166,12 +209,12 @@ class _FruitsViewState extends State<FruitsView> {
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        price.toString(),
+                        price,
                         style: TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        weight.toString(),
+                        weight,
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

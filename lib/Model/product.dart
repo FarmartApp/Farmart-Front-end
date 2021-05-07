@@ -1,19 +1,61 @@
 class Product {
-  final int price, phonenum;
-  final double weight;
-  final String name, description, type, ownwer, weightcatogory, image;
+  int id, userid, amount;
+  double price, weight;
+  String name, productType, image, location;
+  bool deliveryAvailable, sold;
+  DateTime createdat, updatedat, deletedat;
 
-  Product(this.price, this.phonenum, this.weight, this.name, this.description,
-      this.type, this.ownwer, this.weightcatogory, this.image);
+  Product(
+      {this.id,
+      this.userid,
+      this.amount,
+      this.price,
+      this.weight,
+      this.name,
+      this.productType,
+      this.image,
+      this.location,
+      this.deliveryAvailable,
+      this.sold,
+      this.createdat,
+      this.updatedat,
+      this.deletedat});
+  
+  List<Product> searchProducts = [];
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      userid: json['user_id'],
+      amount: json['amount'],
+      price: json['price'],
+      weight: json['weight'],
+      name: json['name'],
+      productType: json['productType'],
+      image: json['image'],
+      location: json['location'],
+      deliveryAvailable: json['deliveryAvailable'],
+      sold: json['sold'],
+      createdat: json['created_at'],
+      updatedat: json['updated_at'],
+      deletedat: json['deleted_at'],
+    );
+  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userid,
+        "amount": amount,
+        "price": price,
+        "weight": weight,
+        "name": name,
+        "productType": productType,
+        "image": image,
+        "location": location,
+        "deliveryAvailable": deliveryAvailable,
+        "sold": sold,
+        "created_at": createdat,
+        "updated_at": updatedat,
+        "deleted_at": deletedat,
+      };
+      
 }
-
-List<Product> products = [
-  Product(150, 0773459839, 230.5, "Potatto", "Natural", "Vegetable", "AAAA",
-      "100-300kg", "assets/potatto.jpeg"),
-  Product(150, 0773459839, 230.5, "Onion", "Natural", "Vegetable", "AAAA",
-      "100-300kg", "assets/onion.jpeg"),
-  Product(150, 0773459839, 230.5, "Tomato", "Natural", "Vegetable", "AAAA",
-      "100-300kg", "assets/tomato.jpg"),
-  Product(150, 0773459839, 230.5, "Pumpkin", "Natural", "Vegetable", "AAAA",
-      "100-300kg", "assets/pumpkin.jpg")
-];

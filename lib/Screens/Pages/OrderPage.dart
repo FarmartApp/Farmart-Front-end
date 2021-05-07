@@ -12,6 +12,7 @@ class _OrderPageState extends State<OrderPage> {
     if (orientation == Orientation.portrait) {
       return Scaffold(
         appBar: AppBar(
+          title: Text("Order"),
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -20,52 +21,52 @@ class _OrderPageState extends State<OrderPage> {
         ),
         body: ListView(
           children: [
-            Row(
-              children: [
-                Card(
-                  child: Container(
-                    height: 100,
-                    width: 200,
-                    child: Image.asset(
-                      "assets/potatto.jpeg",
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Text(
-                  "Potatto",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "Rs100",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  "Weight:",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                // IconButton(icon: Icon(Icons.favorite), onPressed: () {}),
-              ],
+            Container(
+              height: 150,
+              child: Card(
+                  elevation: 10,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Image.asset(
+                          "assets/tomato.jpg",
+                          height: 200,
+                          width: 200,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: Column(
+                          children: [
+                            Text("Name"),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Text("Price"),
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
             ),
-            Text(
-              "Description",
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "Descriptionhjhjijiji",
-              style: TextStyle(fontSize: 14),
-            ),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                child: TextFormField(
+                    decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Enter your current location',
+                ))),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                child: TextFormField(
+                    decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Phone number',
+                ))),
           ],
         ),
       );

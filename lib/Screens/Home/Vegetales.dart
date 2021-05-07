@@ -1,14 +1,48 @@
+import 'package:farmart_flutter_app/Model/product.dart';
 import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:flutter/material.dart';
-
-import 'DetailsPage.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class VegetablesView extends StatefulWidget {
+  final String token;
+
+  const VegetablesView({Key key, this.token}) : super(key: key);
   @override
   _VegetablesViewState createState() => _VegetablesViewState();
 }
 
 class _VegetablesViewState extends State<VegetablesView> {
+  List<Product> vegproducts = List();
+  List<Product> filteredvegproducts = List();
+  Future<http.Response> getVegproducts() async {
+    var usertoken = widget.token;
+    var url = "http://192.168.43.118:9000/api/productFilter?type=Vegetables";
+    var res = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer $usertoken"
+      },
+    ).then((response) {
+      var ddd = jsonDecode(response.body);
+      var datalist = ddd["data"];
+      vegproducts =
+          (datalist as List).map((data) => new Product.fromJson(data)).toList();
+    });
+    filteredvegproducts = vegproducts;
+    print(vegproducts);
+    return res;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getVegproducts();
+    // ProductService.getproducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -48,6 +82,33 @@ class _VegetablesViewState extends State<VegetablesView> {
                   ),
                 )
               ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width - 20,
+              child: TextFormField(
+                onChanged: (text) {
+                  setState(() {
+                    filteredvegproducts = vegproducts
+                        .where((element) => (element.name
+                            .toLowerCase()
+                            .contains(text.toLowerCase())))
+                        .toList();
+                  });
+                },
+                decoration: InputDecoration(
+                    hintText: "Search here",
+                    contentPadding: EdgeInsets.only(left: 18),
+                    //  fillColor: Colors.white,
+                    labelStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide())),
+              ),
             ),
           ),
           SizedBox(
@@ -91,41 +152,21 @@ class _VegetablesViewState extends State<VegetablesView> {
                   padding: EdgeInsets.only(top: 45),
                   child: Container(
                     height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      // scrollDirection: Axis.vertical,
-                      children: <Widget>[
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem("assets/tomato.jpg", "Onion",
-                              "200kg", "100Rs", "img1"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem("assets/pumpkin.jpg", "Onion",
-                              "200kg", "100Rs", "img2"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem("assets/potatto.jpeg", "Onion",
-                              "200kg", "100Rs", "img3"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem("assets/tomato.jpg", "Onion",
-                              "200kg", "100Rs", "img4"),
-                        ),
-                        Card(
-                          elevation: 20,
-                          color: Colors.white38,
-                          child: _builditem("assets/onion.jpeg", "Onion",
-                              "200kg", "100Rs", "img5"),
-                        ),
-                      ],
-                    ),
+                    child: ListView.builder(
+                        itemCount: filteredvegproducts.length,
+                        itemBuilder: (context, index) {
+                          Product vegitem = filteredvegproducts[index];
+                          return Card(
+                              elevation: 20,
+                              color: Colors.white38,
+                              child: _builditem(
+                                "assets/tomato.jpg",
+                                vegitem.name,
+                                vegitem.weight.toString(),
+                                vegitem.price.toString(),
+                                vegitem.id.toString(),
+                              ));
+                        }),
                   ),
                 )
               ],
@@ -142,11 +183,11 @@ class _VegetablesViewState extends State<VegetablesView> {
       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
       child: InkWell(
         onTap: () {
-          Navigator.push(
+          /*  Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      DetailsPage(img, harvestname, price, weight, herotag)));
+                      DetailsPage(img, harvestname, price, weight, herotag)));*/
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

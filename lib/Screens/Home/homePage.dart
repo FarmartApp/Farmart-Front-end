@@ -15,7 +15,9 @@ import 'Vegetales.dart';
 class HomePage extends StatefulWidget {
   final String token;
   final int index;
-  const HomePage({Key key, this.token, this.index}) : super(key: key);
+  final User user;
+  const HomePage({Key key, this.token, this.index, this.user})
+      : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -54,10 +56,7 @@ class _HomePageState extends State<HomePage> {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(icon: Icon(Icons.search), onPressed: null),
-          IconButton(icon: Icon(Icons.notifications), onPressed: null)
-        ],
+        actions: [InkWell(child: Icon(Icons.notifications), onTap: () {})],
       ),
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -67,6 +66,27 @@ class _HomePageState extends State<HomePage> {
               //crossAxisAlignment: CrossAxisAlignment.start,
               scrollDirection: Axis.vertical,
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 80,
+                    child: TextFormField(
+                      onChanged: (text) {
+                        print(text);
+                      },
+                      decoration: InputDecoration(
+                          hintText: "Search here",
+                          contentPadding: EdgeInsets.only(left: 18),
+                          //  fillColor: Colors.white,
+                          labelStyle: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                              borderSide: BorderSide())),
+                    ),
+                  ),
+                ),
                 Row(
                   children: <Widget>[
                     SizedBox(
@@ -86,7 +106,8 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (contex) => AddHarvestPage()));
+                                  builder: (contex) =>
+                                      AddHarvestPage(token: widget.token)));
                         },
                         shape: StadiumBorder(),
                         child: Text(
@@ -309,7 +330,10 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else {
-          return HomePageBody();
+          return HomePageBody(
+            token: widget.token,
+            user: widget.user,
+          );
         }
       }),
       drawer: Drawer(
@@ -326,7 +350,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                     Text(
-                      "Farmart",
+                      widget.user.email,
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     )
@@ -341,8 +365,12 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.person_add, color: Colors.green),
               onTap: () {
                 print(widget.token);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (contex) => EditProfilePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (contex) => EditProfilePage(
+                              user: widget.user,
+                            )));
               },
             ),
             ListTile(

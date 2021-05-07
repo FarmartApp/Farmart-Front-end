@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(
                             builder: (BuildContext context) => HomePage(
                                   token: token,
+                                  user: user,
                                 )));
                   },
                 )
