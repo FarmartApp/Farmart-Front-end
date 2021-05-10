@@ -17,7 +17,7 @@ class _VegetablesViewState extends State<VegetablesView> {
   Future _veg;
   List<Product> vegproducts = List();
   List<Product> filteredvegproducts = List();
-  Future<http.Response> getVegproducts() async {
+  Future<List<Product>> getVegproducts() async {
     var usertoken = widget.token;
     var url = "http://192.168.43.118:9000/api/productFilter?type=Vegetables";
     var res = await http.get(
@@ -34,7 +34,7 @@ class _VegetablesViewState extends State<VegetablesView> {
     });
     filteredvegproducts = vegproducts;
     print(vegproducts);
-    return res;
+    return vegproducts;
   }
 
   @override
@@ -139,40 +139,49 @@ class _VegetablesViewState extends State<VegetablesView> {
             height: 40,
           ),
           Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40))),
-            child: ListView(
-              scrollDirection: Axis.vertical,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(40))),
+              child: FutureBuilder<List<Product>>(
+                  future: _veg,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView(
+                        scrollDirection: Axis.vertical,
 
-              //  primary: false,
-              padding: EdgeInsets.only(left: 25, right: 20),
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 45),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: ListView.builder(
-                        itemCount: filteredvegproducts.length,
-                        itemBuilder: (context, index) {
-                          Product vegitem = filteredvegproducts[index];
-                          return Card(
-                              elevation: 20,
-                              color: Colors.white38,
-                              child: _builditem(
-                                "assets/tomato.jpg",
-                                vegitem.name,
-                                vegitem.weight.toString(),
-                                vegitem.price.toString(),
-                                vegitem.id.toString(),
-                              ));
-                        }),
-                  ),
-                )
-              ],
-            ),
-          )
+                        //  primary: false,
+                        padding: EdgeInsets.only(left: 25, right: 20),
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 45),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height,
+                              child: ListView.builder(
+                                  itemCount: filteredvegproducts.length,
+                                  itemBuilder: (context, index) {
+                                    Product vegitem =
+                                        filteredvegproducts[index];
+                                    return Card(
+                                        elevation: 20,
+                                        color: Colors.white38,
+                                        child: _builditem(
+                                          "assets/tomato.jpg",
+                                          vegitem.name,
+                                          vegitem.weight.toString(),
+                                          vegitem.price.toString(),
+                                          vegitem.id.toString(),
+                                        ));
+                                  }),
+                            ),
+                          )
+                        ],
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }))
         ],
       ),
     );

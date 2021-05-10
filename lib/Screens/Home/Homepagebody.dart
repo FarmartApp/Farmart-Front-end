@@ -89,185 +89,188 @@ class _HomePageBodyState extends State<HomePageBody> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width - 20,
-                child: TextFormField(
-                  onChanged: (text) {
-                    setState(() {
-                      filteredproductlist = products
-                          .where((element) => (element.name
-                              .toLowerCase()
-                              .contains(text.toLowerCase())))
-                          .toList();
-                    });
-                  },
-                  decoration: InputDecoration(
-                      hintText: "Search here",
-                      contentPadding: EdgeInsets.only(left: 18),
-                      //  fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide())),
-                ),
+        body: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width - 20,
+              child: TextFormField(
+                onChanged: (text) {
+                  setState(() {
+                    filteredproductlist = products
+                        .where((element) => (element.name
+                            .toLowerCase()
+                            .contains(text.toLowerCase())))
+                        .toList();
+                  });
+                },
+                decoration: InputDecoration(
+                    hintText: "Search here",
+                    contentPadding: EdgeInsets.only(left: 18),
+                    //  fillColor: Colors.white,
+                    labelStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide())),
               ),
             ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  "Categories",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  width: 150,
-                ),
-                Expanded(
-                  child: RaisedButton(
-                    color: Colors.green,
-                    onPressed: () {
-                      print(products.length);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (contex) => AddHarvestPage(
-                                    token: widget.token,
-                                  )));
-                    },
-                    shape: StadiumBorder(),
-                    child: Text(
-                      "+ Add",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 20,
-                ),
-                InkWell(
-                  onTap: () {
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 20,
+              ),
+              Text(
+                "Categories",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                width: 150,
+              ),
+              Expanded(
+                child: RaisedButton(
+                  color: Colors.green,
+                  onPressed: () {
+                    print(products.length);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (BuildContext context) => VegetablesView(
+                            builder: (contex) => AddHarvestPage(
                                   token: widget.token,
                                 )));
                   },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 220.0,
-                    height: MediaQuery.of(context).size.width - 210.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(color: Colors.grey.withOpacity(0.2))
-                        ]),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image.asset(
-                              "assets/veg.jpeg",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Vegetables",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        )
-                      ],
-                    ),
+                  shape: StadiumBorder(),
+                  child: Text(
+                    "+ Add",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
-                SizedBox(
-                  width: 20,
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => FruitsView(
-                                  token: widget.token,
-                                )));
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width - 220.0,
-                    height: MediaQuery.of(context).size.width - 210.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(color: Colors.grey.withOpacity(0.2))
-                        ]),
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image.asset(
-                              "assets/fruits2.jpg",
-                              fit: BoxFit.cover,
-                            ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => VegetablesView(
+                                token: widget.token,
+                              )));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 220.0,
+                  height: MediaQuery.of(context).size.width - 210.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(color: Colors.grey.withOpacity(0.2))
+                      ]),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.asset(
+                            "assets/veg.jpeg",
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Fruits",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        )
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Vegetables",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      )
+                    ],
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text("Recents",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => FruitsView(
+                                token: widget.token,
+                              )));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 220.0,
+                  height: MediaQuery.of(context).size.width - 210.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(color: Colors.grey.withOpacity(0.2))
+                      ]),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image.asset(
+                            "assets/fruits2.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Fruits",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      )
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  width: 220,
-                ),
-                Text("Filter by", style: TextStyle(fontWeight: FontWeight.bold))
-              ],
-            ),
-            Expanded(
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text("Recents",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              SizedBox(
+                width: 220,
+              ),
+              Text("Filter by", style: TextStyle(fontWeight: FontWeight.bold))
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                height: MediaQuery.of(context).size.height,
                 child: FutureBuilder<List<Product>>(
                     future: _future,
                     builder: (context, snapshot) {
@@ -403,10 +406,10 @@ class _HomePageBodyState extends State<HomePageBody> {
                         ));
                       }
                       return CircularProgressIndicator();
-                    }))
-          ],
-        ),
+                    })),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }

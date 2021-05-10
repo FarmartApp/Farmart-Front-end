@@ -14,9 +14,10 @@ class FruitsView extends StatefulWidget {
 }
 
 class _FruitsViewState extends State<FruitsView> {
+  Future _fruits;
   List<Product> fruitsproducts = List();
   List<Product> filteredfruitsproducts = List();
-  Future<http.Response> getFruitproducts() async {
+  Future<List<Product>> getFruitproducts() async {
     var usertoken = widget.token;
     var url = "http://192.168.43.118:9000/api/productFilter?type=Fruits";
     var res = await http.get(
@@ -33,13 +34,16 @@ class _FruitsViewState extends State<FruitsView> {
     });
     filteredfruitsproducts = fruitsproducts;
     print(fruitsproducts);
-    return res;
+    return fruitsproducts;
   }
 
   @override
   void initState() {
-    getFruitproducts();
+    // getFruitproducts();
     super.initState();
+    setState(() {
+      _fruits = getFruitproducts();
+    });
 
     // ProductService.getproducts();
   }
@@ -139,39 +143,49 @@ class _FruitsViewState extends State<FruitsView> {
             height: 40,
           ),
           Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40))),
-            child: ListView(
-              scrollDirection: Axis.vertical,
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.only(topLeft: Radius.circular(40))),
+              child: FutureBuilder<List<Product>>(
+                  future: _fruits,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView(
+                        scrollDirection: Axis.vertical,
 
-              //  primary: false,
-              padding: EdgeInsets.only(left: 25, right: 20),
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 45),
-                  child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: ListView.builder(
-                          itemCount: filteredfruitsproducts.length,
-                          itemBuilder: (context, index) {
-                            Product fruititem = filteredfruitsproducts[index];
-                            return Card(
-                                elevation: 20,
-                                color: Colors.white38,
-                                child: _builditem(
-                                  "assets/tomato.jpg",
-                                  fruititem.name,
-                                  fruititem.weight.toString(),
-                                  fruititem.price.toString(),
-                                  fruititem.id.toString(),
-                                ));
-                          })),
-                )
-              ],
-            ),
-          )
+                        //  primary: false,
+                        padding: EdgeInsets.only(left: 25, right: 20),
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(top: 45),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height,
+                              child: ListView.builder(
+                                  itemCount: filteredfruitsproducts.length,
+                                  itemBuilder: (context, index) {
+                                    Product fruititem =
+                                        filteredfruitsproducts[index];
+                                    return Card(
+                                        elevation: 20,
+                                        color: Colors.white38,
+                                        child: _builditem(
+                                          "assets/tomato.jpg",
+                                          fruititem.name,
+                                          fruititem.weight.toString(),
+                                          fruititem.price.toString(),
+                                          fruititem.id.toString(),
+                                        ));
+                                  }),
+                            ),
+                          )
+                        ],
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }))
         ],
       ),
     );
