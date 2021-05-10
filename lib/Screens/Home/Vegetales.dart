@@ -14,6 +14,7 @@ class VegetablesView extends StatefulWidget {
 }
 
 class _VegetablesViewState extends State<VegetablesView> {
+  Future _veg;
   List<Product> vegproducts = List();
   List<Product> filteredvegproducts = List();
   Future<http.Response> getVegproducts() async {
@@ -39,7 +40,7 @@ class _VegetablesViewState extends State<VegetablesView> {
   @override
   void initState() {
     super.initState();
-    getVegproducts();
+    _veg = getVegproducts();
     // ProductService.getproducts();
   }
 
