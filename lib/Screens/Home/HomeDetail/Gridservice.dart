@@ -2,16 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:farmart_flutter_app/Model/product.dart';
-
+import 'package:farmart_flutter_app/costants.dart';
 import 'package:http/http.dart' as http;
 
 class GridServices {
   String token;
 
   GridServices(this.token);
-  static  String usertoken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNjIwNjA1MTQxLCJleHAiOjE2MzYxNTcxNDF9.VFdHuD-pC717I1vNK9iQ-jhjVcoQkwjdcxJB_zm1haUrHVCMUQTSfpB5Z213SCIHEWV6YsL_UrYqmCayeigcJw";
+  static String usertoken =
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNjIwNjA1MTQxLCJleHAiOjE2MzYxNTcxNDF9.VFdHuD-pC717I1vNK9iQ-jhjVcoQkwjdcxJB_zm1haUrHVCMUQTSfpB5Z213SCIHEWV6YsL_UrYqmCayeigcJw";
   static Future<List<Product>> fetchHomeData() async {
-    var url = "http://192.168.43.118:9000/api/product";
+    var url = apiBase + ":9000/api/product";
     final res = await http.get(
       url,
       headers: <String, String>{

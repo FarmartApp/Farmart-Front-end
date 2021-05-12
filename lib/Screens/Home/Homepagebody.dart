@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:typed_data';
@@ -13,8 +12,7 @@ import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:farmart_flutter_app/Screens/Product/Addharvest.dart';
 import 'package:farmart_flutter_app/Service/getallitems.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:farmart_flutter_app/costants.dart';
 import 'DetailsPage.dart';
 import 'Vegetales.dart';
 
@@ -29,6 +27,7 @@ class HomePageBody extends StatefulWidget {
 }
 
 class _HomePageBodyState extends State<HomePageBody> {
+  DateTime currentdate = DateTime.now();
   var resbody;
   List<Product> filteredproductlist = List();
   Product product;
@@ -37,10 +36,9 @@ class _HomePageBodyState extends State<HomePageBody> {
   List<Product> products = List();
   Future _future;
   Future<List<Product>> fprod;
-  
   Future<List<Product>> getproducts() async {
     var usertoken = widget.token;
-    var url = "http://192.168.43.118:9000/api/product";
+    var url = apiBase + ":9000/api/product";
     var res = await http.get(
       url,
       headers: <String, String>{
@@ -50,22 +48,13 @@ class _HomePageBodyState extends State<HomePageBody> {
     ).then((response) {
       var ddd = jsonDecode(response.body);
       var datalist = ddd["data"];
-     
       products =
           (datalist as List).map((data) => new Product.fromJson(data)).toList();
       filteredproductlist = products;
     });
 
-  //  print(user);
+    print(products.length);
     return products;
-  }
-
-  String email = "nanthiny49@gmail.com";
-  Future getemail() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      email = sharedPreferences.getString('email');
-    });
   }
 
   Future<List<Product>> searchproduct() async {
@@ -88,11 +77,9 @@ class _HomePageBodyState extends State<HomePageBody> {
   @override
   void initState() {
     super.initState();
-    // getemail();
     setState(() {
       getproducts();
       _future = getproducts();
-      FlutterSession().get('token');
     });
 
     // ProductService.getproducts();

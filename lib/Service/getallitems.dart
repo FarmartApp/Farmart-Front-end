@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:farmart_flutter_app/costants.dart';
 import 'package:http/http.dart';
 import 'package:farmart_flutter_app/Model/product.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +9,10 @@ import 'package:http/http.dart' as http;
 class ProductService {
   final int id;
   final String token;
- ProductService(this.id, this.token);
-  String url = "http://192.168.43.118:9000/api/productFilter?date=true";
+  ProductService(this.id, this.token);
+  String url = apiBase + ":9000/api/productFilter?date=true";
   List<Product> products = List();
 
- 
   Future<List<Product>> getproducts() async {
     try {
       var res = await http.get(
@@ -45,7 +44,7 @@ class ProductService {
     Product product;
     var usertoken = token;
     int pid = id;
-    var url = "http://192.168.43.118:9000/api/product?id=$pid";
+    var url = apiBase + ":9000/api/product?id=$pid";
     var res = await http.get(
       url,
       headers: <String, String>{

@@ -4,7 +4,7 @@ import 'package:farmart_flutter_app/Model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
-
+import 'package:farmart_flutter_app/costants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math' as Math;
@@ -101,7 +101,7 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
     int uid = 5;
     String id = uid.toString();
     String usertoken = widget.token;
-    var url = "http://192.168.43.118:9000/api/product";
+    var url = apiBase + ":9000/api/product";
     var respose = await http.post(
       url,
       headers: <String, String>{

@@ -1,16 +1,10 @@
 import 'dart:convert';
-import 'package:farmart_flutter_app/Model/data.dart';
-import 'package:flutter_session/flutter_session.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sweetalert/sweetalert.dart';
 import 'package:farmart_flutter_app/Model/user.dart';
 import 'package:farmart_flutter_app/Screens/Home/homePage.dart';
 import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'Components/loginbody.dart';
-import 'otp_ui.dart';
+import 'package:farmart_flutter_app/costants.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -28,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var response;
   //Future<User> _user;
 
-  var url = "http://192.168.43.118:9000/api/login";
+  var url = apiBase + ":9000/api/login";
   Future<http.Response> getUser() async {
     response = await http.post(url,
         headers: <String, String>{"Content-type": "application/json"},
@@ -47,19 +41,48 @@ class _LoginScreenState extends State<LoginScreen> {
     User user = User.fromJson(jsonDecode(objText));*/
     id = user.id;
     if (response.statusCode == 200) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('email', email);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => HomePage(
-                    token: token,
-                    user: user,
-                  )));
-      Fluttertoast.showToast(msg: "sucesss");
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext dialogcontext) {
+            return MyAlertDialog(
+              title: "Success",
+              content: message,
+              actions: <Widget>[
+                FlatButton(
+                  child: Icon(Icons.close),
+                  onPressed: () {
+                    //  getuserdata();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => HomePage(
+                                  token: token,
+                                  user: user,
+                                )));
+                  },
+                )
+              ],
+            );
+          });
     } else {
-      Fluttertoast.showToast(msg: "Email or password invalid");
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext dialogcontext) {
+            return MyAlertDialog(
+              title: "Error",
+              content: message,
+              actions: <Widget>[
+                FlatButton(
+                  child: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            );
+          });
     }
 
     return response;

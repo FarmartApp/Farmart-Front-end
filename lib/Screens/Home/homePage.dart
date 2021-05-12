@@ -2,6 +2,7 @@ import 'package:farmart_flutter_app/Model/user.dart';
 import 'package:farmart_flutter_app/Screens/BottomNavigation/Transportpage.dart';
 import 'package:farmart_flutter_app/Screens/BottomNavigation/Wishlist.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
+import 'package:farmart_flutter_app/Screens/Pages/Pricechartpage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/HistoryPage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Setting.dart';
 import 'package:farmart_flutter_app/Screens/Product/Addharvest.dart';
@@ -400,7 +401,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(Icons.money_rounded, color: Colors.green),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (contex) => EditProfilePage()));
+                    MaterialPageRoute(builder: (contex) => ChartsDemo()));
               },
             ),
             ListTile(

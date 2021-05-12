@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:farmart_flutter_app/Model/user.dart';
 import 'package:farmart_flutter_app/Screens/Login/login.dart';
 import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
+import 'package:farmart_flutter_app/costants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   Future<User> _user;
   Future<http.Response> userregister() async {
-    var url = "http://192.168.43.118:9000/api/register";
+    var url = apiBase + ":9000/api/register";
     var response = await http.post(url,
         headers: <String, String>{"Content-type": "application/json"},
         body: jsonEncode(<String, String>{
