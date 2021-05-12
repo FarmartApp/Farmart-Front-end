@@ -12,7 +12,7 @@ import 'package:farmart_flutter_app/Screens/Pages/OrderPage.dart';
 import 'package:farmart_flutter_app/Screens/Product/Addharvest.dart';
 import 'package:farmart_flutter_app/Service/getallitems.dart';
 import 'package:flutter/material.dart';
-
+import 'package:farmart_flutter_app/costants.dart';
 import 'DetailsPage.dart';
 import 'Vegetales.dart';
 
@@ -38,7 +38,7 @@ class _HomePageBodyState extends State<HomePageBody> {
   Future<List<Product>> fprod;
   Future<List<Product>> getproducts() async {
     var usertoken = widget.token;
-    var url = "http://192.168.43.118:9000/api/product";
+    var url = apiBase + ":9000/api/product";
     var res = await http.get(
       url,
       headers: <String, String>{

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'OrderPage.dart';
+import 'package:farmart_flutter_app/costants.dart';
 
 class DetailView extends StatefulWidget {
   final int id;
@@ -26,7 +27,7 @@ class _DetailViewState extends State<DetailView> {
   Future<Product> getproductbyid() async {
     var usertoken = widget.token;
     int pid = widget.id;
-    var url = "http://192.168.43.118:9000/api/product?id=$pid";
+    var url = apiBase + ":9000/api/product?id=$pid";
     var res = await http.get(
       url,
       headers: <String, String>{

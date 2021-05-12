@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:farmart_flutter_app/costants.dart';
 
 class FruitsView extends StatefulWidget {
   final String token;
@@ -19,7 +20,7 @@ class _FruitsViewState extends State<FruitsView> {
   List<Product> filteredfruitsproducts = List();
   Future<List<Product>> getFruitproducts() async {
     var usertoken = widget.token;
-    var url = "http://192.168.43.118:9000/api/productFilter?type=Fruits";
+    var url = apiBase + ":9000/api/productFilter?type=Fruits";
     var res = await http.get(
       url,
       headers: <String, String>{

@@ -1,8 +1,5 @@
 import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
 
-import 'Screens/Home/home.dart';
-import 'Screens/Home/homePage.dart';
-import 'Screens/Register/register.dart';
 import 'package:farmart_flutter_app/costants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
