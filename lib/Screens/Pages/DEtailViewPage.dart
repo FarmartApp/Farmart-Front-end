@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import 'OrderPage.dart';
 
@@ -21,7 +22,7 @@ class _DetailViewState extends State<DetailView> {
   List<Product> products;
   Product product;
   List result;
-
+  //var user;
   Future _futureproduct;
   Future<Product> getproductbyid() async {
     var usertoken = widget.token;
@@ -41,12 +42,24 @@ class _DetailViewState extends State<DetailView> {
         (result as List).map((data) => new Product.fromJson(data)).toList();
     if (res.statusCode == 200) {
       product = products[0];
-      // print(product);
+      //  user = result['user'];
+      //print(user);
+      // print(product.userid);
       //  birthdate = products[0].createdat;
       //  dateformat = DateFormat.yMd(product.createdat);
       //  print(birthdate);
     }
     return product;
+  }
+
+  int phone = 0764236982;
+
+  void customLaunch(command) async {
+    if (await canLaunch(command)) {
+      await launch(command);
+    } else {
+      print("can not launch");
+    }
   }
 
   @override
@@ -98,6 +111,13 @@ class _DetailViewState extends State<DetailView> {
                           //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0, top: 3),
+                        child: Text(
+                          product.weight.toString() + " Kg",
+                          //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -131,7 +151,7 @@ class _DetailViewState extends State<DetailView> {
                             children: [
                               Text("Type"),
                               SizedBox(
-                                width: 250,
+                                width: 150,
                               ),
                               Text(product.productType)
                             ],
@@ -142,7 +162,7 @@ class _DetailViewState extends State<DetailView> {
                             children: [
                               Text("Is Delivery Available"),
                               SizedBox(
-                                width: 150,
+                                width: 60,
                               ),
                               Text(product.deliveryAvailable.toString())
                             ],
@@ -153,7 +173,7 @@ class _DetailViewState extends State<DetailView> {
                             children: [
                               Text("For sale by"),
                               SizedBox(
-                                width: 220,
+                                width: 120,
                               ),
                               Text("Yes")
                             ],
@@ -165,7 +185,11 @@ class _DetailViewState extends State<DetailView> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                       SizedBox(
-                        height: 30,
+                        height: 20,
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        thickness: 0.0,
                       ),
                       Row(
                         children: [
@@ -173,36 +197,37 @@ class _DetailViewState extends State<DetailView> {
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Container(
                                 width: 160,
-                                child: RaisedButton(
-                                    color: Colors.green,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Text("Order",
-                                        style: TextStyle(color: Colors.white)),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OrderPage()));
-                                    })),
+                                child: Text(
+                                  "Call to contact owner",
+                                  style: TextStyle(color: Colors.green),
+                                )),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Container(
-                                width: 160,
-                                child: RaisedButton(
-                                    color: Colors.grey[600],
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Text("Cancel",
-                                        style: TextStyle(color: Colors.white)),
-                                    onPressed: () {})),
-                          ),
+                            padding: const EdgeInsets.only(left: 35.0),
+                            child: IconButton(
+                              onPressed: () {
+                                customLaunch('https://flutter.dev');
+                              },
+                              icon: Icon(
+                                Icons.call,
+                                color: Colors.green,
+                              ),
+                            ),
+                          )
                         ],
-                      )
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        thickness: 0.0,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 10.0, top: 14),
+                          child: Text(
+                            "Suggest transport",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          )),
                     ],
                   );
                 } else {
