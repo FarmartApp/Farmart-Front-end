@@ -33,6 +33,7 @@ class _HomePageBodyState extends State<HomePageBody> {
   Product product;
   //User user;
   ProductService service;
+  List<User> user;
   List<Product> products = List();
   Future _future;
   Future<List<Product>> fprod;
@@ -51,6 +52,8 @@ class _HomePageBodyState extends State<HomePageBody> {
       products =
           (datalist as List).map((data) => new Product.fromJson(data)).toList();
       filteredproductlist = products;
+      //var userlist = datalist['user'];
+      // user = (userlist as List).map((data) => new User.fromJson(data)).toList();
     });
 
     print(products.length);
@@ -405,7 +408,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                           valueColor: AlwaysStoppedAnimation(Colors.amber),
                         ));
                       }
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     })),
           ),
         ],

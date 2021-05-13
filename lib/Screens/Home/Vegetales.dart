@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:farmart_flutter_app/costants.dart';
+
+import '../../costants.dart';
 
 class VegetablesView extends StatefulWidget {
   final String token;
@@ -21,6 +22,7 @@ class _VegetablesViewState extends State<VegetablesView> {
   Future<List<Product>> getVegproducts() async {
     var usertoken = widget.token;
     var url = apiBase + ":9000/api/productFilter?type=Vegetables";
+    //  var url = "http://192.168.43.118:9000/api/productFilter?type=Vegetables";
     var res = await http.get(
       url,
       headers: <String, String>{
@@ -49,45 +51,15 @@ class _VegetablesViewState extends State<VegetablesView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.green,
+      appBar: AppBar(
+        title: Text("View Vegetables "),
+        actions: [IconButton(icon: Icon(Icons.add), onPressed: () {})],
+      ),
+      // backgroundColor: Colors.green,
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(top: 15, left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                Container(
-                  width: 125,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      IconButton(
-                          icon: Icon(Icons.search, color: Colors.white),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                      IconButton(
-                          icon: Icon(Icons.add, color: Colors.white),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: Container(
               height: 50,
               width: MediaQuery.of(context).size.width - 20,
@@ -113,32 +85,6 @@ class _VegetablesViewState extends State<VegetablesView> {
               ),
             ),
           ),
-          SizedBox(
-            height: 25,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 40),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Vegetables",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                    icon: Icon(Icons.filter_list, color: Colors.white),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 40,
-          ),
           Container(
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
@@ -156,7 +102,7 @@ class _VegetablesViewState extends State<VegetablesView> {
                         padding: EdgeInsets.only(left: 25, right: 20),
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(top: 45),
+                            padding: EdgeInsets.only(top: 20),
                             child: Container(
                               height: MediaQuery.of(context).size.height,
                               child: ListView.builder(
@@ -166,7 +112,7 @@ class _VegetablesViewState extends State<VegetablesView> {
                                         filteredvegproducts[index];
                                     return Card(
                                         elevation: 20,
-                                        color: Colors.white38,
+                                        color: Colors.white,
                                         child: _builditem(
                                           "assets/tomato.jpg",
                                           vegitem.name,
@@ -191,7 +137,7 @@ class _VegetablesViewState extends State<VegetablesView> {
   Widget _builditem(String img, String harvestname, String price, String weight,
       String herotag) {
     return Padding(
-      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+      padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
       child: InkWell(
         onTap: () {
           /*  Navigator.push(
