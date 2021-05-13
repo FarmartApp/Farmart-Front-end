@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:farmart_flutter_app/Model/product.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:farmart_flutter_app/costants.dart';
@@ -119,9 +120,23 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
         'image': imageData
       }),
     );
+
     final res = json.decode(respose.body);
+    if (respose.statusCode == 200) {
+      /* Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => HomePage(
+                    token: token,
+                    user: user,
+                  )));*/
+      Fluttertoast.showToast(msg: "sucesssfully added");
+    } else {
+      Fluttertoast.showToast(msg: "Unable to add try again");
+    }
     print(res);
     return respose;
+
     /*final responseJson = json.decode(response.body);
     String message = responseJson["msg"];
     print(response.body.toString());

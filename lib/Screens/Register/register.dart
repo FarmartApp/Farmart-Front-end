@@ -5,6 +5,7 @@ import 'package:farmart_flutter_app/Screens/Login/login.dart';
 import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
 import 'package:farmart_flutter_app/costants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
@@ -35,48 +36,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String msg = responseString["msg"];
     num = response.statusCode;
     if (response.statusCode == 200) {
-      showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext dialogcontext) {
-            return MyAlertDialog(
-              title: "Success",
-              content: msg,
-              actions: <Widget>[
-                FlatButton(
-                  child: Icon(Icons.close),
-                  onPressed: () {
-                    //  Navigator.of(context).pop();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  },
-                )
-              ],
-            );
-          });
+      /* Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => HomePage(
+                    token: token,
+                    user: user,
+                  )));*/
+      Fluttertoast.showToast(msg: "Registered sucesssfully ");
     } else {
-      showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext dialogcontext) {
-            return MyAlertDialog(
-              title: "Error",
-              content: msg,
-              actions: <Widget>[
-                FlatButton(
-                  child: Icon(Icons.close),
-                  onPressed: () {
-                    //  Navigator.pop(context);
-                    //  Navigator.push(context,
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterScreen()));
-                  },
-                )
-              ],
-            );
-          });
+      Fluttertoast.showToast(msg: "Unable to register");
     }
   }
 
