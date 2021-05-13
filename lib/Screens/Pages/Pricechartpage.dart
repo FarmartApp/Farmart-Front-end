@@ -6,7 +6,7 @@ class ChartsDemo extends StatefulWidget {
   //
   ChartsDemo() : super();
 
-  final String title = "Vegetables Price Chart";
+  final String title = "Todays Market Price";
 
   @override
   ChartsDemoState createState() => ChartsDemoState();
@@ -19,34 +19,48 @@ class ChartsDemoState extends State<ChartsDemo> {
   static List<charts.Series<Sales, String>> _createRandomData() {
     final random = Random();
 
-    final yesterdaySalesData = [
-      Sales('carrot', random.nextInt(200) + 50),
-      Sales('peas', random.nextInt(150) + 50),
-      Sales('tomato', random.nextInt(200) + 50),
-      Sales('onion', random.nextInt(150) + 50),
-      Sales('potato', random.nextInt(150) + 50),
+    final pettahSalesData = [
+      Sales('carrot', random.nextInt(100) + 50),
+      Sales('peas', random.nextInt(100) + 50),
+      Sales('tomato', random.nextInt(100) + 50),
+      Sales('onion', random.nextInt(100) + 50),
+      Sales('potato', random.nextInt(100) + 50),
     ];
 
-    final todaySalesData = [
-      Sales('carrot', random.nextInt(200) + 50),
-      Sales('peas', random.nextInt(150) + 50),
-      Sales('tomato', random.nextInt(200) + 50),
-      Sales('onion', random.nextInt(150) + 50),
-      Sales('potato', random.nextInt(150) + 50),
+    final dambullaSalesData = [
+      Sales('carrot', random.nextInt(100) + 50),
+      Sales('peas', random.nextInt(100) + 50),
+      Sales('tomato', random.nextInt(100) + 50),
+      Sales('onion', random.nextInt(100) + 50),
+      Sales('potato', random.nextInt(100) + 50),
+    ];
+
+    final narahenpitaSalesData = [
+      Sales('carrot', random.nextInt(100) + 50),
+      Sales('peas', random.nextInt(100) + 50),
+      Sales('tomato', random.nextInt(100) + 50),
+      Sales('onion', random.nextInt(100) + 50),
+      Sales('potato', random.nextInt(100) + 50),
     ];
 
     return [
       charts.Series<Sales, String>(
-        id: 'Yesterday',
+        id: 'Pettah',
         domainFn: (Sales sales, _) => sales.vegetable,
         measureFn: (Sales sales, _) => sales.salesPrice,
-        data: yesterdaySalesData,
+        data: pettahSalesData,
       ),
       charts.Series<Sales, String>(
-        id: 'Today',
+        id: 'Dambulla',
         domainFn: (Sales sales, _) => sales.vegetable,
         measureFn: (Sales sales, _) => sales.salesPrice,
-        data: todaySalesData,
+        data: dambullaSalesData,
+      ),
+      charts.Series<Sales, String>(
+        id: 'Narahenpita',
+        domainFn: (Sales sales, _) => sales.vegetable,
+        measureFn: (Sales sales, _) => sales.salesPrice,
+        data: narahenpitaSalesData,
       ),
     ];
   }
