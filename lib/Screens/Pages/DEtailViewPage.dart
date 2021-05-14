@@ -10,6 +10,10 @@ import 'dart:io';
 import 'OrderPage.dart';
 import 'package:farmart_flutter_app/costants.dart';
 
+import 'Transport/Transport.dart';
+import 'Transport/Transport.dart';
+import 'Transport/TransportDetailsPage.dart';
+
 class DetailView extends StatefulWidget {
   final int id;
   final String token;
@@ -238,10 +242,19 @@ class _DetailViewState extends State<DetailView> {
                     ),
                     Padding(
                         padding: const EdgeInsets.only(left: 10.0, top: 14),
-                        child: Text(
-                          "Suggest transport",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.green),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TransportPage()));
+                          },
+                          child: Text(
+                            "Click here to view transport",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
                         )),
                     Row(
                       children: [

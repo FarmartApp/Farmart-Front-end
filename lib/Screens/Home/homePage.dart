@@ -1,5 +1,4 @@
 import 'package:farmart_flutter_app/Model/user.dart';
-import 'package:farmart_flutter_app/Screens/BottomNavigation/Transportpage.dart';
 import 'package:farmart_flutter_app/Screens/BottomNavigation/Wishlist.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Pricechartpage.dart';
