@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:io';
 import 'OrderPage.dart';
@@ -59,8 +60,6 @@ class _DetailViewState extends State<DetailView> {
     }
   }
 
-  int phone = 0764236982;
-
   /*void customLaunch(command) async {
     if (await canLaunch(command)) {
       await launch(command);
@@ -68,6 +67,14 @@ class _DetailViewState extends State<DetailView> {
       print("can not launch");
     }
   }*/
+  _launchPhoneURL(String phoneNumber) async {
+    String url = 'tel:' + phoneNumber;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   void initState() {
@@ -95,148 +102,181 @@ class _DetailViewState extends State<DetailView> {
         ],
       ),
       body: Container(
-          height: 1000,
-          child: FutureBuilder<Product>(
-              future: _futureproduct,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView(
-                    children: [
-                      Image.asset("assets/tomato.jpg"),
-                      Padding(
+        height: 1000,
+        child: FutureBuilder<Product>(
+            future: _futureproduct,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView(
+                  children: [
+                    Image.asset("assets/tomato.jpg"),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        databyid['name'],
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 22),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 3),
+                      child: Text(
+                        databyid['location'],
+                        //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 3),
+                      child: Text(
+                        "Posted on " + databyid['createdAt'],
+                        //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 0.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "Rs/Kg " + databyid['price'].toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                            color: Colors.green),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 3),
+                      child: Text(
+                        databyid['weight'].toString() + "Kg",
+                        //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0, top: 4),
+                      child: Text(
+                        "For sale by " + databyid['user']['firstName'],
+                      ),
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 0.0,
+                    ),
+                    Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          databyid['name'],
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 22),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 3),
-                        child: Text(
-                          databyid['location'],
-                          //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 3),
-                        child: Text(
-                          "Posted on " + databyid['createdAt'],
-                          //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 0.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Rs/Kg " + databyid['price'].toString(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                              color: Colors.green),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 3),
-                        child: Text(
-                          databyid['weight'].toString() + "Kg",
-                          //  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 4),
-                        child: Text(
-                          "For sale by " + databyid['user']['firstName'],
-                        ),
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 0.0,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              Text("Type"),
-                              SizedBox(
-                                width: 150,
-                              ),
-                              Text(databyid['productType'])
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              Text("Is Delivery Available"),
-                              SizedBox(
-                                width: 60,
-                              ),
-                              Text(databyid['deliveryAvailable'].toString())
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 10.0, top: 14),
-                          child: Text(
-                            "Description",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 0.0,
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Container(
-                                width: 160,
-                                child: Text(
-                                  "Call to contact owner",
-                                  style: TextStyle(color: Colors.green),
-                                )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 35.0),
-                            child: IconButton(
-                              onPressed: () {
-                                //  customLaunch('https://flutter.dev');
-                              },
-                              icon: Icon(
-                                Icons.call,
-                                color: Colors.green,
-                              ),
+                        child: Row(
+                          children: [
+                            Text("Type"),
+                            SizedBox(
+                              width: 150,
                             ),
-                          )
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.grey,
-                        thickness: 0.0,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 10.0, top: 14),
-                          child: Text(
-                            "Suggest transport",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green),
-                          )),
-                    ],
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              })),
+                            Text(databyid['productType'])
+                          ],
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Text("Is Delivery Available"),
+                            SizedBox(
+                              width: 60,
+                            ),
+                            Text(databyid['deliveryAvailable'].toString())
+                          ],
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0, top: 14),
+                        child: Text(
+                          "Description",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 0.0,
+                    ),
+                    /*   Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Container(
+                              width: 160,
+                              child: Text(
+                                "Call to contact owner",
+                                style: TextStyle(color: Colors.green),
+                              )),
+                        ),
+                         Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              databyid['user']['contactPrimary'],
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 35.0),
+                          child: IconButton(
+                            onPressed: () {
+                              _launchPhoneURL(databyid['user']['contactPrimary']
+                                  .toString());
+                            },
+                            icon: Icon(
+                              Icons.call,
+                              color: Colors.green,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),*/
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 0.0,
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0, top: 14),
+                        child: Text(
+                          "Suggest transport",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.green),
+                        )),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: RaisedButton(
+                                color: Colors.green,
+                                child: Text(
+                                  "Call",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {
+                                  _launchPhoneURL(databyid['user']
+                                          ['contactPrimary']
+                                      .toString());
+                                })),
+                        Divider(color: Colors.white, indent: 5.0),
+                        Expanded(
+                            child: RaisedButton(
+                                color: Colors.green,
+                                child: Text(
+                                  "Share",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                onPressed: () {
+                                  //_onShareData(context);
+                                })),
+                      ],
+                    )
+                  ],
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
+      ),
     );
   }
 }
