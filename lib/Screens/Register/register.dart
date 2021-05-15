@@ -29,24 +29,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "firstName": firstnameController.text,
           "email": emailController.text,
           "contactPrimary": primarycontactController.text,
-          "password": passwordController.text
+          "password": passwordController.text,
+          "district": _selectedtype.districtname
         }));
     print(response);
     final responseString = json.decode(response.body);
     String msg = responseString["msg"];
     num = response.statusCode;
     if (response.statusCode == 200) {
-      /* Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => HomePage(
-                    token: token,
-                    user: user,
-                  )));*/
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
       Fluttertoast.showToast(msg: "Registered sucesssfully ");
     } else {
       Fluttertoast.showToast(msg: "Unable to register");
     }
+  }
+
+  List<District> _districtlist = District.gettypelist();
+  List<DropdownMenuItem<District>> _dropdowndistrict;
+  District _selectedtype;
+  @override
+  void initState() {
+    _dropdowndistrict = buildDropdownMenuItems(_districtlist);
+    _selectedtype = _dropdowndistrict[0].value;
+    super.initState();
+  }
+
+  List<DropdownMenuItem<District>> buildDropdownMenuItems(List districtlist) {
+    List<DropdownMenuItem<District>> items = List();
+    for (District districttype in districtlist) {
+      items.add(
+        DropdownMenuItem(
+          value: districttype,
+          child: Text(districttype.districtname),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownItem(District selecteddistrictType) {
+    setState(() {
+      _selectedtype = selecteddistrictType;
+    });
   }
 
   @override
@@ -135,6 +160,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(
                     height: 20.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20.0,
+                      right: 20,
+                    ),
+                    child: Container(
+                        height: 50,
+                        child: DropdownButton(
+                            value: _selectedtype,
+                            items: _dropdowndistrict,
+                            onChanged: onChangeDropdownItem)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(

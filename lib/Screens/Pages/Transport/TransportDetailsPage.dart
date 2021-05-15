@@ -102,21 +102,32 @@ class _TransportDetailPageState extends State<TransportDetailPage> {
           SizedBox(
             height: 30,
           ),
-          Row(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AspectRatio(
+                aspectRatio: 12,
+                child: RaisedButton(
+                    color: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0)),
+                    child: Text("call", style: TextStyle(color: Colors.white)),
+                    onPressed: () {})),
+          ),
+          /* Row(
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: Container(
-                    width: 160,
+                child: Expanded(
+                    
                     child: RaisedButton(
                         color: Colors.green,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        child: Text("Order",
+                        child: Text("call",
                             style: TextStyle(color: Colors.white)),
                         onPressed: () {})),
               ),
-              Padding(
+                Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                     width: 160,
@@ -129,7 +140,7 @@ class _TransportDetailPageState extends State<TransportDetailPage> {
                         onPressed: () {})),
               ),
             ],
-          )
+          )*/
         ],
       ),
     );

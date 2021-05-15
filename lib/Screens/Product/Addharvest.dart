@@ -75,6 +75,8 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
   void initState() {
     _dropdownharvest = buildDropdownMenuItems(_harvestlist);
     _selectedtype = _dropdownharvest[0].value;
+    _dropdowndistrict = buildDropdownMenuDistrictItems(_districtlist);
+    _selecteddistricttype = _dropdowndistrict[0].value;
     super.initState();
   }
 
@@ -97,6 +99,30 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
     });
   }
 
+  List<District> _districtlist = District.gettypelist();
+  List<DropdownMenuItem<District>> _dropdowndistrict;
+  District _selecteddistricttype;
+
+  List<DropdownMenuItem<District>> buildDropdownMenuDistrictItems(
+      List districtlist) {
+    List<DropdownMenuItem<District>> items = List();
+    for (District districttype in districtlist) {
+      items.add(
+        DropdownMenuItem(
+          value: districttype,
+          child: Text(districttype.districtname),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownDistrictItem(District selecteddistrictType) {
+    setState(() {
+      _selecteddistricttype = selecteddistrictType;
+    });
+  }
+
   Future<http.Response> addProduct() async {
     String protype = "sssss";
     int uid = 5;
@@ -113,7 +139,7 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
         'name': nameController.text,
         'price': priceController.text,
         'weight': weightController.text,
-        'location': locationController.text,
+        'district': _selecteddistricttype.districtname,
         'deliveryAvailable': _isdelivery.toString(),
         'sold': _issold.toString(),
         'productType': '${_selectedtype.type}',
@@ -224,7 +250,7 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
                 },
               ),
             ),
-            Padding(
+            /*Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 10),
               child: TextFormField(
                 controller: locationController,
@@ -240,6 +266,13 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
                   }
                 },
               ),
+            ),*/
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+              child: DropdownButton(
+                  value: _selecteddistricttype,
+                  items: _dropdowndistrict,
+                  onChanged: onChangeDropdownDistrictItem),
             ),
             Padding(
                 padding: EdgeInsets.only(left: 10, right: 20, top: 10),

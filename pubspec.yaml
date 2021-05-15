@@ -46,6 +46,10 @@ dependencies:
   fluttertoast: ^7.1.8
   shared_preferences: ^0.5.12+4
   url_launcher: ^5.4.11
+  multi_image_picker: ^4.7.15
+  dio: ^3.0.10
+  http_parser:
+  flutter_easyloading: ^2.2.2
   
 
 dev_dependencies:
