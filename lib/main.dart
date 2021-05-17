@@ -1,4 +1,5 @@
 import 'package:farmart_flutter_app/Screens/Welcome/welcome_screen.dart';
+import 'package:farmart_flutter_app/Wrapper.dart';
 
 import 'package:farmart_flutter_app/costants.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class FarmartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: WelcomeScreen(),
+      home: Wrapper(),
       debugShowCheckedModeBanner: false,
       title: 'Authentication',
       theme: ThemeData(

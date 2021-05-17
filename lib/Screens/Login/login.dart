@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var response;
   //Future<User> _user;
 
-var url = apiBase + ":9000/api/login";
+  var url = apiBase + ":9000/api/login";
   Future<http.Response> getUser() async {
     response = await http.post(url,
         headers: <String, String>{"Content-type": "application/json"},
@@ -47,10 +47,12 @@ var url = apiBase + ":9000/api/login";
     /*String objText = '{"firstName": "bezkoder", "email": "example@gmail.com"}';
     User user = User.fromJson(jsonDecode(objText));*/
     id = user.id;
-    if (response.statusCode == 200) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.setString('email', email);
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString('email', email);
+    sharedPreferences.setString('token', token);
+    sharedPreferences.setString('user', json.encode(user));
+    String mymail = sharedPreferences.getString('email');
+    if ((response.statusCode == 200) || (mymail.length > 0)) {
       Navigator.push(
           context,
           MaterialPageRoute(
