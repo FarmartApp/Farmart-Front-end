@@ -1,10 +1,14 @@
 import 'dart:convert';
-
-import 'package:farmart_flutter_app/Model/product.dart';
-import 'package:flutter/material.dart';
+import 'package:farmart_flutter_app/Model/user.dart';
+import 'package:farmart_flutter_app/Screens/Home/Homepagebody.dart';
+import 'package:farmart_flutter_app/Screens/Home/homePage.dart';
+import 'package:farmart_flutter_app/Screens/Pages/Imageshow.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:farmart_flutter_app/Model/product.dart';
+import 'package:flutter/material.dart';
+
 import 'package:farmart_flutter_app/costants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,8 +17,9 @@ import 'package:image/image.dart' as Img;
 
 class AddHarvestPage extends StatefulWidget {
   final String token;
+  final User user;
 
-  const AddHarvestPage({Key key, this.token}) : super(key: key);
+  const AddHarvestPage({Key key, this.token, this.user}) : super(key: key);
   @override
   _AddHarvestPageState createState() => _AddHarvestPageState();
 }
@@ -48,10 +53,10 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
   File imageFile;
   String imageData;
   choiceImage() async {
-    var pickedImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var pickedImage = await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
-        imageFile = pickedImage;
+        imageFile = File(pickedImage.path);
       });
       imageData = base64Encode(imageFile.readAsBytesSync());
       return imageData;
@@ -143,7 +148,8 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
         'deliveryAvailable': _isdelivery.toString(),
         'sold': _issold.toString(),
         'productType': '${_selectedtype.type}',
-        'image': imageData
+        'image': imageData,
+        'location': locationController.text
       }),
     );
 
@@ -250,7 +256,7 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
                 },
               ),
             ),
-            /*Padding(
+            Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 10),
               child: TextFormField(
                 controller: locationController,
@@ -266,7 +272,7 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
                   }
                 },
               ),
-            ),*/
+            ),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 10),
               child: DropdownButton(
@@ -295,7 +301,6 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
                         child: Text("Choose"),
                         onPressed: () {
                           choiceImage();
-                          print(imageData);
                         })
                   ],
                 )),
@@ -329,8 +334,16 @@ class _AddHarvestPageState extends State<AddHarvestPage> {
                       child: Text("Save"),
                       onPressed: () {
                         //  newproduct.name = nameController.text;
-                        print(widget.token);
+
                         addProduct();
+                        //Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage(
+                                      token: widget.token,
+                                      user: widget.user,
+                                    )));
                         print(imageData);
                       }),
                 ),

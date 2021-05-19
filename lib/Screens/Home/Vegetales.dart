@@ -40,6 +40,17 @@ class _VegetablesViewState extends State<VegetablesView> {
     return vegproducts;
   }
 
+  showImage(String imagedata) {
+    if (imagedata.length % 4 > 0) {
+      // imagedata += '=====' * (4 - imagedata.length % 4);
+      print(imagedata.length);
+    }
+
+    final _byteImage = Base64Decoder().convert(imagedata);
+    Widget image = Image.memory(_byteImage);
+    return image;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -114,7 +125,7 @@ class _VegetablesViewState extends State<VegetablesView> {
                                         elevation: 20,
                                         color: Colors.white,
                                         child: _builditem(
-                                          "assets/tomato.jpg",
+                                          filteredvegproducts[index].image,
                                           vegitem.name,
                                           vegitem.weight.toString(),
                                           vegitem.price.toString(),
@@ -152,14 +163,11 @@ class _VegetablesViewState extends State<VegetablesView> {
             Container(
               child: Row(
                 children: <Widget>[
-                  Hero(
-                      tag: herotag,
-                      child: Image(
-                        image: AssetImage(img),
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      )),
+                  Container(
+                    height: 100,
+                    width: 150,
+                    child: showImage(img),
+                  ),
                   SizedBox(
                     width: 10,
                   ),
@@ -197,7 +205,7 @@ class _VegetablesViewState extends State<VegetablesView> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       child: Text(
-                        "Order",
+                        "View",
                         style: TextStyle(color: Colors.white),
                       ),
                       color: Colors.green,

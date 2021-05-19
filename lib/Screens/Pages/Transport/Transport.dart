@@ -159,7 +159,7 @@ class _TransportPageState extends State<TransportPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TransportDetailPage()));
+                                builder: (context) => TransportDetailView()));
                       }),
                 ),
                 IconButton(

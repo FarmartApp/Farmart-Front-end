@@ -40,6 +40,17 @@ class _FruitsViewState extends State<FruitsView> {
     return fruitsproducts;
   }
 
+  showImage(String imagedata) {
+    if (imagedata.length % 4 > 0) {
+      // imagedata += '=====' * (4 - imagedata.length % 4);
+      print(imagedata.length);
+    }
+
+    final _byteImage = Base64Decoder().convert(imagedata);
+    Widget image = Image.memory(_byteImage);
+    return image;
+  }
+
   @override
   void initState() {
     // getFruitproducts();
@@ -149,14 +160,11 @@ class _FruitsViewState extends State<FruitsView> {
             Container(
               child: Row(
                 children: <Widget>[
-                  Hero(
-                      tag: herotag,
-                      child: Image(
-                        image: AssetImage(img),
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      )),
+                  Container(
+                    height: 100,
+                    width: 150,
+                    child: showImage(img),
+                  ),
                   SizedBox(
                     width: 10,
                   ),

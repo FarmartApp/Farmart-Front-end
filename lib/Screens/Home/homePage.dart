@@ -4,6 +4,9 @@ import 'package:farmart_flutter_app/Screens/Pages/Editprofilepage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Pricechartpage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/HistoryPage.dart';
 import 'package:farmart_flutter_app/Screens/Pages/Setting.dart';
+import 'package:farmart_flutter_app/Screens/Pages/image.dart';
+import 'package:farmart_flutter_app/Screens/Pages/start.dart';
+import 'package:farmart_flutter_app/Screens/Pages/uploadimage.dart';
 import 'package:farmart_flutter_app/Screens/Product/Addharvest.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +19,7 @@ class HomePage extends StatefulWidget {
   final String token;
   final int index;
   final User user;
+
   const HomePage({Key key, this.token, this.index, this.user})
       : super(key: key);
   @override
@@ -330,6 +334,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         } else {
+          // return UploadPageExample();
           return HomePageBody(
             token: widget.token,
             user: widget.user,
@@ -368,8 +373,9 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (contex) => EditProfilePage(
+                        builder: (context) => EditProfilePage(
                               user: widget.user,
+                              token: widget.token,
                             )));
               },
             ),

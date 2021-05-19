@@ -32,6 +32,7 @@ class _DetailViewState extends State<DetailView> {
   List result;
   var databyid;
   //var user;
+  String ImageDataform;
   Future _futureproduct;
   Future<Product> getproductbyid() async {
     var usertoken = widget.token;
@@ -50,6 +51,7 @@ class _DetailViewState extends State<DetailView> {
     if (responsebyid.statusCode == 200) {
       var test = Product.fromJson(datalistbyid);
       print(databyid['user']['firstName']);
+      ImageDataform = databyid['image'];
       return Product.fromJson(jsonDecode(responsebyid.body));
       //  user = result['user'];
 
@@ -62,6 +64,10 @@ class _DetailViewState extends State<DetailView> {
       // then throw an exception.
       throw Exception('Failed to load album');
     }
+  }
+
+  showImage(String image) {
+    return Image.memory(base64Decode(image));
   }
 
   /*void customLaunch(command) async {
@@ -96,7 +102,7 @@ class _DetailViewState extends State<DetailView> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(icon: Icon(Icons.share), onPressed: () {}),
+          // IconButton(icon: Icon(Icons.share), onPressed: () {}),
           IconButton(
               icon: Icon(
                 Icons.favorite_rounded,
@@ -113,7 +119,12 @@ class _DetailViewState extends State<DetailView> {
               if (snapshot.hasData) {
                 return ListView(
                   children: [
-                    Image.asset("assets/tomato.jpg"),
+                    ImageDataform != null
+                        ? Container(
+                            height: 200,
+                            width: 250,
+                            child: showImage(ImageDataform))
+                        : Center(child: Text("nooo")),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(

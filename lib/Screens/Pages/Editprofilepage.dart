@@ -1,14 +1,21 @@
+import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:fancy_dialog/FancyGif.dart';
 import 'package:farmart_flutter_app/Model/user.dart';
 import 'package:farmart_flutter_app/Screens/Home/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sweetalert/sweetalert.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
 import 'package:cool_alert/cool_alert.dart';
 
+import '../../costants.dart';
+
 class EditProfilePage extends StatefulWidget {
   final User user;
-  EditProfilePage({this.user});
+  final String token;
+  EditProfilePage({this.user, this.token});
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -73,7 +80,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             child: IconButton(
                                 icon: Icon(
-                                  Icons.edit,
+                                  Icons.add_a_photo,
                                   color: Colors.white,
                                 ),
                                 onPressed: () {
@@ -86,6 +93,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               EditProfilePageField(
                 user: widget.user,
+                token: widget.token,
               ),
             ],
           );
@@ -127,7 +135,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             child: IconButton(
                                 icon: Icon(
-                                  Icons.edit,
+                                  Icons.add_a_photo,
                                   color: Colors.white,
                                 ),
                                 onPressed: () {})),
@@ -138,6 +146,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               EditProfilePageField(
                 user: widget.user,
+                token: widget.token,
               ),
             ],
           );
@@ -174,14 +183,83 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 class EditProfilePageField extends StatefulWidget {
   final User user;
+  final String token;
 
-  const EditProfilePageField({Key key, this.user}) : super(key: key);
+  const EditProfilePageField({Key key, this.user, this.token})
+      : super(key: key);
   @override
   _EditProfilePageFieldState createState() => _EditProfilePageFieldState();
 }
 
 class _EditProfilePageFieldState extends State<EditProfilePageField> {
   final _formkey = GlobalKey<FormState>();
+  /* TextEditingController fname = TextEditingController();
+  TextEditingController lname = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController district = TextEditingController();
+  TextEditingController uname = TextEditingController();*/
+  TextEditingController username = TextEditingController();
+  String firsname = "";
+  String lname = "";
+  String address = "";
+  String phone = "";
+  String district = "";
+  String uname = "";
+  Future _profile;
+  Future<http.Response> updateProfile() async {
+    String protype = "sssss";
+    int uid = 5;
+    String id = uid.toString();
+    String usertoken = widget.token;
+    var url = apiBase + ":9000/api/editUser";
+    var respose = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer $usertoken"
+      },
+      body: jsonEncode(<String, String>{
+        "firstName": widget.user.firstName,
+        "contactPrimary": widget.user.contactPrimary,
+        "username": widget.user.username,
+        "address": widget.user.address,
+        "district": widget.user.district,
+        "lastName": widget.user.lastName,
+      }),
+    );
+
+    final res = json.decode(respose.body);
+    if (respose.statusCode == 200) {
+      /* Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => HomePage(
+                    token: token,
+                    user: user,
+                  )));*/
+      Fluttertoast.showToast(msg: "sucesssfully updated");
+    } else {
+      Fluttertoast.showToast(msg: "Unable to update try again");
+    }
+    print(res);
+    return respose;
+
+    /*final responseJson = json.decode(response.body);
+    String message = responseJson["msg"];
+    print(response.body.toString());
+  }*/
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _profile = updateProfile();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -191,11 +269,14 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 70,
+              height: 50,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
+                // controller: fname,
                 initialValue: widget.user.firstName,
-                onChanged: (text) {},
+                onChanged: (text) {
+                  widget.user.firstName = text;
+                },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     labelText: "Name",
@@ -217,12 +298,13 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 70,
+              height: 50,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
-              //  initialValue: widget.user.lastname,
+                //  controller: lname,
+                initialValue: widget.user.lastName,
                 onChanged: (text) {
-                  //   print();
+                  widget.user.lastName = text;
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -246,12 +328,13 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 70,
+              height: 50,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
-                //     initialValue: widget.user.firstName,
+                //  controller: address,
+                initialValue: widget.user.address,
                 onChanged: (text) {
-                  print(text);
+                  widget.user.address = text;
                 },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -274,12 +357,13 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 70,
+              height: 50,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
-                initialValue: widget.user.password,
+                //    controller: phone,
+                initialValue: widget.user.contactPrimary,
                 onChanged: (text) {
-                  print(text);
+                  widget.user.contactPrimary = text;
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -303,12 +387,13 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 70,
+              height: 50,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
-                //      initialValue: widget.user.password,
+                //   controller: district,
+                initialValue: widget.user.district,
                 onChanged: (text) {
-                  print(text);
+                  widget.user.district = text;
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -332,12 +417,12 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 70,
+              height: 50,
               width: MediaQuery.of(context).size.width - 50,
               child: TextFormField(
-                //     initialValue: widget.user.password,
+                initialValue: widget.user.username,
                 onChanged: (text) {
-                  print(text);
+                  widget.user.username = text;
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -371,7 +456,10 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
                           borderRadius: BorderRadius.circular(20)),
                       color: Colors.green,
                       onPressed: () {
-                        if (_formkey.currentState.validate()) {
+                        updateProfile();
+                        Navigator.pop(context);
+                        print(widget.user.username);
+                        /*     if (_formkey.currentState.validate()) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.success,
@@ -382,7 +470,7 @@ class _EditProfilePageFieldState extends State<EditProfilePageField> {
                             type: CoolAlertType.error,
                             text: "Error!",
                           );
-                        }
+                        }*/
                       },
                       child: Text(
                         "Update",

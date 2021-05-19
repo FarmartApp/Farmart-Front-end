@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var response;
   //Future<User> _user;
 
-var url = apiBase + ":9000/api/login";
+  var url = apiBase + ":9000/api/login";
   Future<http.Response> getUser() async {
     response = await http.post(url,
         headers: <String, String>{"Content-type": "application/json"},
@@ -43,6 +43,8 @@ var url = apiBase + ":9000/api/login";
     String token = datajson["token"];
     final userjsondata = datajson["user"];
     User user = User.fromJson(userjsondata);
+    tokenforuser = token;
+    email = emailController.text;
     //Data data = Data.fromJson(datajson);
     /*String objText = '{"firstName": "bezkoder", "email": "example@gmail.com"}';
     User user = User.fromJson(jsonDecode(objText));*/
@@ -51,11 +53,12 @@ var url = apiBase + ":9000/api/login";
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString('email', email);
+      print(userjsondata);
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (BuildContext context) => HomePage(
-                    token: token,
+                    token: token,                  
                     user: user,
                   )));
       Fluttertoast.showToast(msg: "sucesss");

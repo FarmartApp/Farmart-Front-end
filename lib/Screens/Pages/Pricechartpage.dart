@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:url_launcher/url_launcher.dart';
 
 class ChartsDemo extends StatefulWidget {
   //
@@ -91,6 +92,15 @@ class ChartsDemoState extends State<ChartsDemo> {
     );
   }
 
+  _launchPhoneURL(String url) async {
+    //String url = 'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -103,9 +113,241 @@ class ChartsDemoState extends State<ChartsDemo> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20.0),
-        child: barChart(),
+      /*   body: Container(
+        padding: EdgeInsets.all(20.0),      
+        // child: barChart(),
+      ),*/
+      body: ListView(
+        children: [
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/ampara/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Anuradhapura"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+          ListTile(
+              leading: Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ),
+              title: InkWell(
+                onTap: () {
+                  _launchPhoneURL(
+                      'https://market.ideabeam.com/ta/l/kilinochchi/vegetables/');
+                },
+                child: Text("Ampara"),
+              )),
+        ],
       ),
     );
   }

@@ -39,7 +39,7 @@ class _HomePageBodyState extends State<HomePageBody> {
   Future<List<Product>> fprod;
   Future<List<Product>> getproducts() async {
     var usertoken = widget.token;
-    var url = apiBase + ":9000/api/product";
+    var url = apiBase + ":9000/api/productFilter?date=true";
     var res = await http.get(
       url,
       headers: <String, String>{
@@ -144,8 +144,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                         context,
                         MaterialPageRoute(
                             builder: (contex) => AddHarvestPage(
-                                  token: widget.token,
-                                )));
+                                token: widget.token, user: widget.user)));
                   },
                   shape: StadiumBorder(),
                   child: Text(
@@ -313,6 +312,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       child: Card(
                                         child: Stack(
                                           children: [
+                                            showImage(filteredproductlist[index]
+                                                .image),
                                             /* Hero(
                                       tag: productobj.id,
                                       child: Image(
